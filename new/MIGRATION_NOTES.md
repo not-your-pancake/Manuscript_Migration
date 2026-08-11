@@ -114,20 +114,34 @@ the only sentences in the manuscript containing wording not in the original.
 
 ## 4. Open issues — not fixed, need your decision
 
-### 4.1 16 references print a broken, doubled DOI link
+### 4.1 Doubled DOI links — RESOLVED in `main.tex`, `references.bib` untouched
 
 `references.bib` stores 17 DOIs as full URLs (`doi = {https://doi.org/10.…}`)
 and 39 as bare DOIs (`doi = {10.…}`). `sn-basic.bst` prepends `https://doi.org/`
-unconditionally, so the full-URL ones render as:
+unconditionally, so 16 of the 67 printed references rendered as:
 
 ```
 https://doi.org/https://doi.org/10.1038/s41598-025-98607-7
 ```
 
-**These links do not resolve.** 16 of the 67 printed references are affected
-(Abdelsattar, Abdullah, Bilgili, … ). The old `.bst` did not do this, so the
-problem only appears after migration. Not fixed because it requires either
-editing `references.bib` (17 fields) or overriding `\doi` in the preamble.
+— links that do not resolve. The old `.bst` did not do this, so it appeared only
+after migration.
+
+Fixed by defining `\doi` in the `main.tex` preamble so that the
+`\providecommand{\doi}` in `main.bbl` is skipped and both DOI forms are handled:
+
+```latex
+\usepackage{xstring}
+\newcommand{\doi}[1]{\IfBeginWith{#1}{https://doi.org/}%
+  {\url{#1}}%
+  {\IfBeginWith{#1}{http://dx.doi.org/}%
+    {\url{#1}}%
+    {\url{https://doi.org/#1}}}}
+```
+
+**`references.bib` was not edited.** If the manuscript is ever moved to another
+class or `.bst`, this override travels with `main.tex`; the underlying
+inconsistency in the `.bib` remains and may be worth cleaning up separately.
 
 ### 4.2 Word count is over the limit
 

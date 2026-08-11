@@ -13,6 +13,18 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{url}
+\usepackage{xstring}
+
+%% references.bib stores some DOIs as bare (10.xxxx/...) and some as full URLs.
+%% sn-basic.bst's \doi prepends https://doi.org/ unconditionally, which doubles
+%% the prefix on the full-URL ones and breaks the link. Defining \doi here means
+%% the \providecommand in main.bbl is skipped and this handles both forms.
+%% references.bib is deliberately left untouched.
+\newcommand{\doi}[1]{\IfBeginWith{#1}{https://doi.org/}%
+  {\url{#1}}%
+  {\IfBeginWith{#1}{http://dx.doi.org/}%
+    {\url{#1}}%
+    {\url{https://doi.org/#1}}}}
 
 \graphicspath{{figures/}}
 
