@@ -19,7 +19,7 @@ over both files returns **7,873 words on each side**.
 |---|---|
 | `main.tex` | Anonymised manuscript. Compile this. |
 | `title_page.tex` | Authors, affiliations, email, ORCID, CRediT, live URLs. **Separate submission file — not `\input` by `main.tex`.** |
-| `references.bib` | Copy of `old/manuscript/references.bib` **with 6 corrected entries** — see section 4.0. Every other entry is unmodified. |
+| `references.bib` | Copy of `old/manuscript/references.bib` with **6 corrected entries, 3 DOIs added and 4 internal notes removed** — see section 4.0. Every other entry is unmodified. |
 | `sn-jnl.cls`, `sn-basic.bst` | Copied from `template/`. Unmodified. |
 | `tables/*.tex` | 6 table bodies, byte-identical to `old/manuscript/tables/`. |
 | `figures/*.png` | The 8 referenced figures, byte-identical to `old/outputs/figures/`. |
@@ -232,9 +232,50 @@ Two are flagged by the checker but are false positives — Crossref stores the
 XGBoost paper's title as just "XGBoost", and the IPCC chapter's title is literally
 "Asia", too short for the title-overlap test.
 
-**17 entries carry no DOI** (ISO 7243, the WHO report, NeurIPS papers, Breiman,
-Steadman, the Visual Crossing API, etc.). You chose not to verify these; they
-remain unchecked.
+### The 17 entries with no DOI — also verified
+
+Checked against Crossref by title and author.
+
+**Three had a DOI that was simply missing, with metadata already correct. Added:**
+
+| Key | DOI added | Crossref record |
+|---|---|---|
+| `Breiman2001` | `10.1023/A:1010933404324` | Leo Breiman, *Random Forests*, Machine Learning 45:5–32 |
+| `GeoBoundaries2020` | `10.1371/journal.pone.0231866` | Runfola, Anderson, Baier et al., PLOS ONE 15:e0231866 |
+| `Hwang1981` | `10.1007/978-3-642-48318-9` | Hwang & Yoon, *Multiple Attribute Decision Making*, Springer LNEMS |
+
+**The other 14 are legitimately DOI-less and correctly described:** ISO 7243:2017,
+the WHO/WMO/UNEP/ICNIRP UV guide, `Kjellstrom2019` (ILO report, has an ISBN), the
+NeurIPS papers `ke2017lightgbm` and `prokhorenkova2018catboost`, the JMLR papers
+`Pedregosa2011` and `Bergstra2012`, Rothfusz's NWS technical report, Yaglou &
+Minard (1957), `FAO1988`, `Rashid1991`, `tonouchi2006` (AMS conference), the
+Visual Crossing website, and `hunter1999` (uncited, does not print).
+
+### Internal working notes were printing in the reference list — FIXED
+
+Four entries carried `note = {[verify-intended]}`, an internal "not yet checked"
+marker. **This is a defect the migration introduced:** the old hand-inlined
+bibliography omitted `note` fields, so the string appears **0 times in the old
+PDF and 4 times in the migrated one**, because BibTeX prints `note`.
+
+Reviewers would have seen, for example:
+
+```
+Rashid HE (1991) Geography of Bangladesh. University Press Limited,
+  Dhaka, Bangladesh, [verify-intended]
+Runfola D, ... PLOS ONE 15(4):e0231866. [verify-intended]; Bangladesh
+  ADM2, gbOpen release, CC BY 3.0 IGO
+```
+
+The `note` fields were removed from `Pedregosa2011`, `GeoBoundaries2020`,
+`FAO1988` and `Rashid1991`. Nothing was lost from the paper — the
+CC BY 3.0 IGO attribution for geoBoundaries is already stated in the Methods
+text. Verified: "verify-intended", "gbOpen" and "agro-ecological zones
+framework" now appear **0 times** in the PDF.
+
+`note` fields on other entries were left alone: `vc` keeps "Accessed: 2026-07-16"
+(standard for a web source) and `saha2025adaptability` keeps "Preprint at
+Research Square" (uncited, does not print).
 
 ---
 

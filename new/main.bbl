@@ -60,7 +60,8 @@ Binte~Ahmed A, Zijan Z, Joy A, et~al (2026) Machine-learning framework for
   public health interventions. PLOS One 21. \doi{10.1371/journal.pone.0348202}
 
 \bibitem[{Breiman(2001)}]{Breiman2001}
-Breiman L (2001) Random forests. Machine Learning 45(1):5--32
+Breiman L (2001) Random forests. Machine Learning 45(1):5--32.
+  \doi{10.1023/A:1010933404324}
 
 \bibitem[{Chen and Guestrin(2016)}]{chen2016xgboost}
 Chen T, Guestrin C (2016) Xgboost: A scalable tree boosting system. In:
@@ -90,8 +91,7 @@ Ekra AT, Hamed MM, Ali Z, et~al (2024) Changes in human heat discomfort and its
 \bibitem[{{FAO/UNDP}(1988)}]{FAO1988}
 {FAO/UNDP} (1988) Land resources appraisal of bangladesh for agricultural
   development. Tech. rep., Food and Agriculture Organization of the United
-  Nations, Rome, Italy, [verify-intended]; origin of the Bangladesh
-  agro-ecological zones framework
+  Nations, Rome, Italy
 
 \bibitem[{Gal{\'a}n-Sales et~al.(2024)}]{galansales2024}
 Gal{\'a}n-Sales FJ, et~al (2024) An approach to enhance time series forecasting
@@ -114,7 +114,7 @@ Hasan MM, Hasan MJ, Rahman PB (2024) Comparison of {RNN-LSTM}, {TFDF} and
 
 \bibitem[{Hwang and Yoon(1981)}]{Hwang1981}
 Hwang CL, Yoon K (1981) Multiple Attribute Decision Making: Methods and
-  Applications. Springer
+  Applications. Springer, \doi{10.1007/978-3-642-48318-9}
 
 \bibitem[{{International Organization for
   Standardization}(2017)}]{iso7243_2017}
@@ -251,8 +251,7 @@ Pasche OC, Wider J, Zhang Z, et~al (2025) Validating deep learning weather
 \bibitem[{Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort, Michel,
   Thirion, Grisel et~al.}]{Pedregosa2011}
 Pedregosa F, Varoquaux G, Gramfort A, et~al (2011) Scikit-learn: Machine
-  learning in {Python}. Journal of Machine Learning Research 12:2825--2830.
-  [verify-intended]
+  learning in {Python}. Journal of Machine Learning Research 12:2825--2830
 
 \bibitem[{P{\"o}rtner et~al.(2022)P{\"o}rtner, Roberts, Adams, Adler, Aldunce,
   Ali, Begum, Betts, Bezner~Kerr, Biesbroek, Birkmann, Bowen, Castellanos,
@@ -301,7 +300,7 @@ Rahman MN, Rony MRH, Jannat FA, et~al (2022) Impact of urbanization on urban
 
 \bibitem[{Rashid(1991)}]{Rashid1991}
 Rashid HE (1991) Geography of Bangladesh. University Press Limited, Dhaka,
-  Bangladesh, [verify-intended]
+  Bangladesh
 
 \bibitem[{Raymond et~al.(2020)Raymond, Matthews, and Horton}]{raymond2020}
 Raymond C, Matthews T, Horton RM (2020) The emergence of heat and humidity too
@@ -317,7 +316,7 @@ Rothfusz LP (1990) The heat index equation (or, more than you ever wanted to
   et~al.}]{GeoBoundaries2020}
 Runfola D, Anderson A, Baier H, et~al (2020) geoboundaries: A global database
   of political administrative boundaries. PLOS ONE 15(4):e0231866.
-  [verify-intended]; Bangladesh ADM2, gbOpen release, CC BY 3.0 IGO
+  \doi{10.1371/journal.pone.0231866}
 
 \bibitem[{Saha et~al.(2025)Saha, Mahanta, Yamane, Muruta, Kamimera, and
   Terao}]{saha2025postescalation}
