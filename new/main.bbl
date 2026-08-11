@@ -1,0 +1,411 @@
+\begin{thebibliography}{67}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{\url{https://doi.org/#1}}
+\providecommand{\eprint}[2][]{\url{#2}}
+ \bibcommenthead
+
+\bibitem[{Abdelsattar et~al.(2025)Abdelsattar, {AbdelMoety}, and
+  Emad-Eldeen}]{abdelsattar2025ml}
+Abdelsattar M, {AbdelMoety} A, Emad-Eldeen A (2025) Comparative analysis of
+  machine learning techniques for temperature and humidity prediction in
+  photovoltaic environments. Scientific Reports 15:15650.
+  \doi{https://doi.org/10.1038/s41598-025-98607-7}
+
+\bibitem[{Abdullah et~al.(2025)Abdullah, Waheed, Mahmodul~Hasan, and
+  Morshed}]{abdullah2025xai}
+Abdullah M, Waheed S, Mahmodul~Hasan M, et~al (2025) Explainable ai-driven dew
+  point forecasting with attention-based temporal convolutional networks. IEEE
+  Access 13:59923--59948. \doi{https://doi.org/10.1109/ACCESS.2025.3557263}
+
+\bibitem[{Abrar et~al.(2022)Abrar, Sarkar, Nishtha, Talukdar, Shahfahad,
+  Rahman, Islam, and Mosavi}]{Abrar2022}
+Abrar R, Sarkar SK, Nishtha KT, et~al (2022) Assessing the spatial mapping of
+  heat vulnerability under urban heat island (uhi) effect in the dhaka
+  metropolitan area. Sustainability 14(9):4945. \doi{10.3390/su14094945}
+
+\bibitem[{Ahmed et~al.(2022)Ahmed, Ishtiaque, Zahan et~al.}]{ahmed2022}
+Ahmed I, Ishtiaque S, Zahan T, et~al (2022) Climate change vulnerability in
+  {Bangladesh} based on trend analysis of some extreme temperature indices.
+  Theoretical and Applied Climatology 149:831--842.
+  \doi{10.1007/s00704-022-04079-4}
+
+\bibitem[{Akter and Rahman(2025)}]{akter2025}
+Akter MR, Rahman MH (2025) Analysis of climatic factors and utilization of
+  machine learning techniques to anticipate humidity levels in northern
+  {Bangladesh}. American Journal of Data Mining and Knowledge Discovery
+  10(1):1--20. \doi{10.11648/j.ajdmkd.20251001.11}
+
+\bibitem[{Bhatnagar et~al.(2018)Bhatnagar, Mathur, and Garg}]{bhatnagar2018}
+Bhatnagar M, Mathur J, Garg V (2018) Determining base temperature for heating
+  and cooling degree-days for {India}. Journal of Building Engineering
+  18:270--280. \doi{10.1016/j.jobe.2018.03.020}
+
+\bibitem[{Bilgili(2023)}]{bilgili2023cdd}
+Bilgili M (2023) Time series forecasting on cooling degree-days (cdd) using
+  sarima model. Natural Hazards 118:2569--2592.
+  \doi{https://doi.org/10.1007/s11069-023-06109-4}
+
+\bibitem[{Binte~Ahmed et~al.(2026)Binte~Ahmed, Zijan, Joy, and
+  Rois}]{mollah2026mlheatindex}
+Binte~Ahmed A, Zijan Z, Joy A, et~al (2026) Machine-learning framework for
+  conditional estimation and scenario-based projection of the heat index for
+  public health interventions. PLOS One 21. \doi{10.1371/journal.pone.0348202}
+
+\bibitem[{Breiman(2001)}]{Breiman2001}
+Breiman L (2001) Random forests. Machine Learning 45(1):5--32
+
+\bibitem[{Chen and Guestrin(2016)}]{chen2016xgboost}
+Chen T, Guestrin C (2016) Xgboost: A scalable tree boosting system. In:
+  Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge
+  Discovery and Data Mining. Association for Computing Machinery, New York, NY,
+  United States, pp 785--794, \doi{https://doi.org/10.1145/2939672.2939785}
+
+\bibitem[{Dewan et~al.(2021)Dewan, Kiselev, Botje, Mahmud, Bhuian, and
+  Hassan}]{dewan2021}
+Dewan A, Kiselev G, Botje D, et~al (2021) Diurnal and seasonal trends and
+  associated determinants of surface urban heat islands in large {Bangladesh}
+  cities. Urban Climate 38:100896. \doi{10.1016/j.uclim.2021.100896}
+
+\bibitem[{Ehsan et~al.(2026)Ehsan, Bina, Bashar, and
+  Paul}]{ehsan2026extremeheat}
+Ehsan T, Bina FA, Bashar GMH, et~al (2026) A machine learning-based forecasting
+  approaches and correlation analysis to assess future extreme heat scenarios
+  in bangladesh and its impact on public health. Engineering Reports
+  8(1):e70588. \doi{https://doi.org/10.1002/eng2.70588}
+
+\bibitem[{Ekra et~al.(2024)Ekra, Hamed, Ali, Muhammad, Khan, Kamruzzaman, and
+  Shahid}]{tanim2024heat}
+Ekra AT, Hamed MM, Ali Z, et~al (2024) Changes in human heat discomfort and its
+  drivers in bangladesh. Urban Climate 55:101884.
+  \doi{10.1016/j.uclim.2024.101884},
+  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S2212095524000804}
+
+\bibitem[{Faisal et~al.(2022)Faisal, Kafy, Al~Rakib et~al.}]{faisal2022}
+Faisal AA, Kafy AA, Al~Rakib A, et~al (2022) Impact of urbanization on urban
+  heat island intensity in major districts of {Bangladesh} using remote sensing
+  and geo-spatial tools. Climate 10(1):3. \doi{10.3390/cli10010003}
+
+\bibitem[{{FAO/UNDP}(1988)}]{FAO1988}
+{FAO/UNDP} (1988) Land resources appraisal of bangladesh for agricultural
+  development. Tech. rep., Food and Agriculture Organization of the United
+  Nations, Rome, Italy, [verify-intended]; origin of the Bangladesh
+  agro-ecological zones framework
+
+\bibitem[{Gal{\'a}n-Sales et~al.(2024)}]{galansales2024}
+Gal{\'a}n-Sales FJ, et~al (2024) An approach to enhance time series forecasting
+  by fast {Fourier} transform. In: Proceedings of the 18th International
+  Conference on Soft Computing Models in Industrial and Environmental
+  Applications (SOCO 2023). Springer, \doi{10.1007/978-3-031-42529-5\_25}
+
+\bibitem[{Hanoon et~al.(2021)Hanoon, Ahmed, Zaini, Razzaq, Kumar, Sherif,
+  Sefelnasr, and El-Shafie}]{hanoon2021ml}
+Hanoon MS, Ahmed AN, Zaini N, et~al (2021) Developing machine learning
+  algorithms for meteorological temperature and humidity forecasting at
+  terengganu state in malaysia. Scientific Reports 11:18935.
+  \doi{https://doi.org/10.1038/s41598-021-96872-w}
+
+\bibitem[{Hwang and Yoon(1981)}]{Hwang1981}
+Hwang CL, Yoon K (1981) Multiple Attribute Decision Making: Methods and
+  Applications. Springer
+
+\bibitem[{{International Organization for
+  Standardization}(2017)}]{iso7243_2017}
+{International Organization for Standardization} (2017) Ergonomics of the
+  thermal environment --- {Assessment} of heat stress using the {WBGT} (wet
+  bulb globe temperature) index
+
+\bibitem[{Ioannou et~al.(2022)Ioannou, Foster, Morris, Piil, Havenith,
+  Mekjavic, Kenny, Nybo, and Flouris}]{flouris2022}
+Ioannou LG, Foster J, Morris NB, et~al (2022) Occupational heat strain in
+  outdoor workers: A comprehensive review and meta-analysis. Temperature
+  9(1):67--102. \doi{https://doi.org/10.1080/23328940.2022.2030634}
+
+\bibitem[{Islam et~al.(2020)Islam, Ahmed, and Rahman}]{islam2020cdd}
+Islam ARMT, Ahmed I, Rahman MS (2020) Trends in cooling and heating degree-days
+  overtimes in {Bangladesh}? {An} investigation of the possible causes of
+  changes. Natural Hazards 101:879--909. \doi{10.1007/s11069-020-03900-5}
+
+\bibitem[{Islam et~al.(2021)Islam, Ahmed, Rahman et~al.}]{islam2021extremes}
+Islam ARMT, Ahmed I, Rahman MS, et~al (2021) Spatiotemporal trends of
+  temperature extremes in {Bangladesh} under changing climate using
+  multi-statistical techniques. Theoretical and Applied Climatology
+  147:137--152. \doi{10.1007/s00704-021-03828-1}
+
+\bibitem[{Islam et~al.(2026)}]{islam2026enso}
+Islam MA, et~al (2026) Seasonal weather pattern prediction from {ENSO} indices
+  using machine learning. Discover Environment \doi{10.1007/s44274-026-00533-6}
+
+\bibitem[{Jeong et~al.(2025)Jeong, Yu, and Cannon}]{jeong2025humidex}
+Jeong DI, Yu B, Cannon AJ (2025) Comparison of two distinct leading modes in
+  the variability of summer humidex and temperature heatwaves over north
+  america. Climate Dynamics 63(182):1457--1579.
+  \doi{https://doi.org/10.1007/s00382-025-07669-w},
+  \urlprefix\url{https://link.springer.com/article/10.1007/s00382-025-07669-w}
+
+\bibitem[{Kamal et~al.(2024{\natexlab{a}})Kamal, Fahim, and
+  Shahid}]{kamal2024scientific}
+Kamal ASMM, Fahim AKF, Shahid S (2024{\natexlab{a}}) Changes in wet bulb globe
+  temperature and risk to heat-related hazards in {Bangladesh}. Scientific
+  Reports 14:10417. \doi{10.1038/s41598-024-61138-8}
+
+\bibitem[{Kamal et~al.(2024{\natexlab{b}})Kamal, Fahim, and
+  Shahid}]{kamal2024ijc}
+Kamal ASMM, Fahim AKF, Shahid S (2024{\natexlab{b}}) Simplified equations for
+  wet bulb globe temperature estimation in {Bangladesh}. International Journal
+  of Climatology 44:1636--1653. \doi{10.1002/joc.8402}
+
+\bibitem[{Ke et~al.(2017)Ke, Meng, Finley, Wang, Chen, Ma, Ye, and
+  Liu}]{ke2017lightgbm}
+Ke G, Meng Q, Finley T, et~al (2017) Lightgbm: A highly efficient gradient
+  boosting decision tree. In: Guyon I, Luxburg UV, Bengio S, et~al (eds)
+  Advances in Neural Information Processing Systems 30. Curran Associates,
+  Inc., pp 3146--3154,
+  \urlprefix\url{https://proceedings.neurips.cc/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html}
+
+\bibitem[{Khatun et~al.(2024)}]{khatun2024}
+Khatun MK, et~al (2024) Temperature extremes projections over {Bangladesh} from
+  {CMIP6} multi-model ensemble. Theoretical and Applied Climatology
+  \doi{10.1007/s00704-024-05173-5}
+
+\bibitem[{Kim et~al.(2023)}]{kim2023toxins}
+Kim Hj, et~al (2023) Ensemble machine learning of gradient boosting ({XGBoost},
+  {LightGBM}, {CatBoost}) and attention-based {CNN-LSTM} for harmful algal
+  blooms forecasting. Toxins 15(10):608. \doi{10.3390/toxins15100608}
+
+\bibitem[{Kjellstrom et~al.(2019)Kjellstrom, Ma{\^i}tre, Saget, Otto, and
+  Karimova}]{Kjellstrom2019}
+Kjellstrom T, Ma{\^i}tre N, Saget C, et~al (2019) Working on a warmer planet:
+  The impact of heat stress on labour productivity and decent work. Tech. rep.,
+  International Labour Organization, Geneva, Switzerland,
+  \urlprefix\url{https://www.ilo.org/publications/working-warmer-planet-impact-heat-stress-labour-productivity-and-decent}
+
+\bibitem[{Kong and Huber(2022)}]{kong2022}
+Kong Q, Huber M (2022) Explicit calculations of wet-bulb globe temperature
+  compared with approximations and why it matters for labor productivity.
+  Earth's Future 10(3):e2021EF002334. \doi{10.1029/2021EF002334}
+
+\bibitem[{Kushwaha et~al.(2026)Kushwaha, Kumar, and
+  Hisaki}]{kushwaha2026humidex}
+Kushwaha R, Kumar P, Hisaki Y (2026) Global future heat stress projections:
+  Regional variations of humidex changes from high-resolution cmip6 models.
+  Atmospheric Research 327:108367.
+  \doi{https://doi.org/10.1016/j.atmosres.2025.108367},
+  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0169809525004594}
+
+\bibitem[{Lawrence(2005)}]{lawrence2005}
+Lawrence MG (2005) The relationship between relative humidity and the dewpoint
+  temperature in moist air: A simple conversion and applications. Bulletin of
+  the American Meteorological Society 86(2):225--233.
+  \doi{10.1175/BAMS-86-2-225}
+
+\bibitem[{Lemke and Kjellstrom(2012)}]{lemke2012}
+Lemke B, Kjellstrom T (2012) Calculating workplace wbgt from meteorological
+  data: A tool for climate change assessment. Industrial Health 50(4):267--278.
+  \doi{10.2486/indhealth.MS1352}
+
+\bibitem[{Liljegren et~al.(2008)Liljegren, Carhart, Lawday, Tschopp, and
+  Sharp}]{liljegren2008}
+Liljegren JC, Carhart RA, Lawday P, et~al (2008) Modeling the wet bulb globe
+  temperature using standard meteorological measurements. Journal of
+  Occupational and Environmental Hygiene 5(10):645--655.
+  \doi{10.1080/15459620802310770}
+
+\bibitem[{Miah et~al.(2026)}]{miah2026}
+Miah MA, et~al (2026) Investigating the association between heatstroke
+  mortality and climatic factors in {Bangladesh}: {An} ecological time series
+  study. Health Science Reports \doi{10.1002/hsr2.72510}
+
+\bibitem[{Mohammadi et~al.(2015)Mohammadi, Shamshirband, Motamedi,
+  Petkovi{\'c}, Hashim, and Gocic}]{mohammadi2015elm}
+Mohammadi K, Shamshirband S, Motamedi S, et~al (2015) Extreme learning machine
+  based prediction of daily dew point temperature. Computers and Electronics in
+  Agriculture 117:214--225. \doi{https://doi.org/10.1016/j.compag.2015.08.008},
+  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0168169915002343}
+
+\bibitem[{Park et~al.(2024)}]{park2024}
+Park S, et~al (2024) Characteristics of the urban heat island in {Dhaka},
+  {Bangladesh}, and its interaction with heat waves. Asia-Pacific Journal of
+  Atmospheric Sciences \doi{10.1007/s13143-024-00362-8}
+
+\bibitem[{Parsons(2006)}]{parsons2006}
+Parsons KC (2006) Heat stress standard {ISO} 7243 and its global application.
+  Industrial Health 44(3):368--379. \doi{10.2486/indhealth.44.368}
+
+\bibitem[{Parsons et~al.(2021)Parsons, Masuda, Kroeger, Shindell, Wolff, and
+  Spector}]{parsons2021labor}
+Parsons LA, Masuda YJ, Kroeger T, et~al (2021) Global labor loss due to humid
+  heat exposure underestimated for outdoor workers. Environmental Research
+  Letters 17(1):014050. \doi{10.1088/1748-9326/ac3dae}
+
+\bibitem[{Pasche et~al.(2025)Pasche, Wider, Zhang, Zscheischler, and
+  Engelke}]{pasche2025validating}
+Pasche OC, Wider J, Zhang Z, et~al (2025) Validating deep learning weather
+  forecast models on recent high-impact extreme events. Artificial Intelligence
+  for the Earth Systems 4(1). \doi{https://doi.org/10.1175/AIES-D-24-0033.1}
+
+\bibitem[{Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort, Michel,
+  Thirion, Grisel et~al.}]{Pedregosa2011}
+Pedregosa F, Varoquaux G, Gramfort A, et~al (2011) Scikit-learn: Machine
+  learning in {Python}. Journal of Machine Learning Research 12:2825--2830.
+  [verify-intended]
+
+\bibitem[{P{\"o}rtner et~al.(2022)P{\"o}rtner, Roberts, Adams, Adler, Aldunce,
+  Ali, Begum, Betts, Bezner~Kerr, Biesbroek, Birkmann, Bowen, Castellanos,
+  Ciss{\'e}, Constable, Cramer, Dodman, Eriksen, Fischlin, Garschagen,
+  Glavovic, Gilmore, Haasnoot, Harper, Hasegawa, Hayward, Hirabayashi, Howden,
+  Kalaba, Kiessling, Lasco, Lawrence, Lemos, Lempert, Ley, Lissner, Lluch-Cota,
+  Loeschke, Lucatello, Luo, Mackey, Maharaj, Mendez, Mintenbeck, M{\"o}ller,
+  Vale, Morecroft, Mukherji, Mycoo, Mustonen, Nalau, Okem, Ometto, Parmesan,
+  Pelling, Pinho, Poloczanska, Racault, Reckien, Pereira, Revi, Rose,
+  Sanchez-Rodriguez, Schipper, Schmidt, Schoeman, Shaw, Singh, Solecki,
+  Stringer, Thomas, Totin, Trisos, van Aalst, Viner, Wairiu, Warren, Yanda, and
+  Ibrahim}]{ipcc2022ar6}
+P{\"o}rtner HO, Roberts DC, Adams H, et~al (2022) Summary for policymakers. In:
+  P{\"o}rtner HO, Roberts DC, Tignor M, et~al (eds) Climate Change 2022:
+  Impacts, Adaptation and Vulnerability. Contribution of Working Group II to
+  the Sixth Assessment Report of the Intergovernmental Panel on Climate Change.
+  Cambridge University Press, Cambridge, UK and New York, NY, USA, p 3--33,
+  \doi{https://doi.org/10.1017/9781009325844.001}
+
+\bibitem[{Prokhorenkova et~al.(2018)Prokhorenkova, Gusev, Vorobev, Dorogush,
+  and Gulin}]{prokhorenkova2018catboost}
+Prokhorenkova L, Gusev G, Vorobev A, et~al (2018) Catboost: unbiased boosting
+  with categorical features. In: Bengio S, Wallach H, Larochelle H, et~al (eds)
+  Advances in Neural Information Processing Systems 31. Curran Associates,
+  Inc., pp 6639--6649,
+  \urlprefix\url{https://proceedings.neurips.cc/paper/2018/hash/14491b756b3a51daac41c24863285549-Abstract.html}
+
+\bibitem[{Qasem et~al.(2019)Qasem, Samadianfard, Sadri~Nahand, Mosavi,
+  Shamshirband, and Chau}]{qasem2019dewpoint}
+Qasem SN, Samadianfard S, Sadri~Nahand H, et~al (2019) Estimating daily dew
+  point temperature using machine learning algorithms. Water 11(3):582.
+  \doi{https://doi.org/10.3390/w11030582}
+
+\bibitem[{Rahman et~al.(2021)Rahman, Salam, Islam, Tasnuva, Haque, Shahid, Hu,
+  and Mallick}]{rahman2021}
+Rahman MB, Salam R, Islam ARMT, et~al (2021) Appraising the historical and
+  projected spatiotemporal changes in the heat index in {Bangladesh}.
+  Theoretical and Applied Climatology 146(1--2):125--138.
+  \doi{10.1007/s00704-021-03705-x}
+
+\bibitem[{Rahman et~al.(2024)}]{rahman2024rnlstm}
+Rahman MH, et~al (2024) Comparison of {RNN-LSTM}, {TFDF} and stacking model
+  approach for weather forecasting in {Bangladesh} using historical data from
+  1963 to 2022. PLOS ONE \doi{10.1371/journal.pone.0305406}
+
+\bibitem[{Rashid(1991)}]{Rashid1991}
+Rashid HE (1991) Geography of Bangladesh. University Press Limited, Dhaka,
+  Bangladesh, [verify-intended]
+
+\bibitem[{Raymond et~al.(2020)Raymond, Matthews, and Horton}]{raymond2020}
+Raymond C, Matthews T, Horton RM (2020) The emergence of heat and humidity too
+  severe for human tolerance. Science Advances 6(19):eaaw1838.
+  \doi{10.1126/sciadv.aaw1838}
+
+\bibitem[{Rothfusz(1990)}]{rothfusz1990}
+Rothfusz LP (1990) The heat index equation (or, more than you ever wanted to
+  know about heat index). Tech. Rep. SR/SSD 90-23, NWS Southern Region
+  Headquarters, Fort Worth, TX
+
+\bibitem[{Runfola et~al.(2020)Runfola, Anderson, Baier
+  et~al.}]{GeoBoundaries2020}
+Runfola D, Anderson A, Baier H, et~al (2020) geoboundaries: A global database
+  of political administrative boundaries. PLOS ONE 15(4):e0231866.
+  [verify-intended]; Bangladesh ADM2, gbOpen release, CC BY 3.0 IGO
+
+\bibitem[{Saha et~al.(2025)Saha, Mahanta, Yamane, Muruta, Kamimera, and
+  Terao}]{saha2025postescalation}
+Saha P, Mahanta R, Yamane Y, et~al (2025) Post-2000 escalation of humid
+  heatwaves and emerging cloudburst risks across the south asia. Asian Journal
+  of Engineering Geology 2:157--158. \doi{10.64862/ajeg.2025.2sp.73.197}
+
+\bibitem[{Scoccimarro et~al.(2017)Scoccimarro, Fogli, and
+  Gualdi}]{scoccimarro2017humidity}
+Scoccimarro E, Fogli PG, Gualdi S (2017) The role of humidity in determining
+  scenarios of perceived temperature extremes in europe. Environmental Research
+  Letters 12(11):114029. \doi{10.1088/1748-9326/aa8cdd}
+
+\bibitem[{Shaw et~al.(2022)Shaw, Luo, Cheong, Abdul~Halim, Chaturvedi,
+  Hashizume, Insarov, Ishikawa, Jafari, Kitoh, Pulhin, Singh, Vasant, and
+  Zhang}]{Shaw2022IPCCAsia}
+Shaw R, Luo Y, Cheong TS, et~al (2022) Asia. In: P{\"o}rtner HO, Roberts DC,
+  Tignor M, et~al (eds) Climate Change 2022: Impacts, Adaptation and
+  Vulnerability. Cambridge University Press, Cambridge, UK and New York, NY,
+  USA, p 1457--1579, \doi{10.1017/9781009325844.012}
+
+\bibitem[{Sojan and Srinivasan(2024)}]{sojan2024humidheat}
+Sojan J, Srinivasan J (2024) A comparative analysis of accelerating humid and
+  dry heat stress in india. Environmental Research Communications 6.
+  \doi{10.1088/2515-7620/ad2490}
+
+\bibitem[{Spinoni et~al.(2018)Spinoni, Vogt, Barbosa, Dosio, McCormick, Bigano,
+  and F{\"u}ssel}]{spinoni2018}
+Spinoni J, Vogt JV, Barbosa P, et~al (2018) Changes of heating and cooling
+  degree-days in {Europe} from 1981 to 2100. International Journal of
+  Climatology 38:e191--e208. \doi{10.1002/joc.5362}
+
+\bibitem[{Steadman(1979)}]{steadman1979}
+Steadman RG (1979) The assessment of sultriness. {Part I}: A
+  temperature-humidity index based on human physiology and clothing science.
+  Journal of Applied Meteorology 18(7):861--873.
+  \doi{10.1175/1520-0450(1979)018<0861:TAOSPI>2.0.CO;2}
+
+\bibitem[{Stull(2011)}]{stull2011}
+Stull R (2011) Wet-bulb temperature from relative humidity and air temperature.
+  Journal of Applied Meteorology and Climatology 50(11):2267--2269.
+  \doi{10.1175/JAMC-D-11-0143.1}
+
+\bibitem[{Sultana et~al.(2021)Sultana, Islam, Akter, and Paul}]{Sultana2021}
+Sultana S, Islam AKMS, Akter F, et~al (2021) Changes in wet bulb globe
+  temperature and risk to heat-related hazards in bangladesh. Scientific
+  Reports 11:9683. \doi{10.1038/s41598-021-89214-4}
+
+\bibitem[{Tabassum et~al.(2025)Tabassum, Park, Hong, Baik, and
+  Beom-Soon}]{tabassum2025coolroofs}
+Tabassum A, Park K, Hong SH, et~al (2025) Impacts of cool roofs on urban heat
+  island and air quality in dhaka, bangladesh: A case modeling study during a
+  heat wave. Atmospheric Pollution Research 16:102549.
+  \doi{10.1016/j.apr.2025.102549}
+
+\bibitem[{Teggi et~al.(2026)Teggi, Costanzini, Despini
+  et~al.}]{teggi2026uvindex}
+Teggi S, Costanzini S, Despini F, et~al (2026) Uv index from era5 reanalysis.
+  Scientific Reports 16:12950. \doi{https://doi.org/10.1038/s41598-026-40878-9}
+
+\bibitem[{Tonouchi et~al.(2006)Tonouchi, Murayama, and Ono}]{tonouchi2006}
+Tonouchi M, Murayama K, Ono M (2006) Wbgt forecast for preventing heat strokes
+  in japan. In: Sixth Symposium on the Urban Environment, American
+  Meteorological Society
+
+\bibitem[{{Visual Crossing Corporation}(2025)}]{vc}
+{Visual Crossing Corporation} (2025) Visual crossing weather data.
+  \url{https://www.visualcrossing.com/}, accessed: 2026-07-16
+
+\bibitem[{{World Health Organization} et~al.(2002){World Health Organization},
+  {World Meteorological Organization}, {United Nations Environment Programme},
+  and {International Commission on Non-Ionizing Radiation
+  Protection}}]{who2002}
+{World Health Organization}, {World Meteorological Organization}, {United
+  Nations Environment Programme}, et~al (2002) Global Solar {UV} Index: A
+  Practical Guide. World Health Organization, Geneva
+
+\bibitem[{Xu et~al.(2024)Xu, Guo, Shi, Wu, Pan, Gao, Tang, and
+  Han}]{xuh2024heatstroke}
+Xu H, Guo S, Shi X, et~al (2024) Machine learning-based analysis and prediction
+  of meteorological factors and urban heatstroke diseases. Frontiers in Public
+  Health 12:1420608. \doi{https://doi.org/10.3389/fpubh.2024.1420608}
+
+\bibitem[{Yaglou and Minard(1957)}]{yaglou1957}
+Yaglou CP, Minard D (1957) Control of heat casualties at military training
+  centers. AMA Archives of Industrial Health 16:302--316
+
+\bibitem[{Yao et~al.(2021)Yao, Sun, and Dong}]{yao2022catboost}
+Yao F, Sun J, Dong J (2021) Estimating daily dew point temperature based on
+  local and cross-station meteorological data using catboost algorithm. CMES -
+  Computer Modeling in Engineering and Sciences 130(2):671--700.
+  \doi{https://doi.org/10.32604/cmes.2022.018450},
+  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S1526149221000588}
+
+\end{thebibliography}
