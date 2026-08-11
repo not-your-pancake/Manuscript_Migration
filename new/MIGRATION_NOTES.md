@@ -62,6 +62,47 @@ consider it identifying.
 
 ---
 
+## 2a. Why the new PDF is shorter — no text was removed
+
+The new PDF is 33 pages against the old one's 54. That is entirely layout. Text
+extracted directly from the two PDFs shows the new document contains **more**
+words, not fewer:
+
+| | Old `manuscript.pdf` | New `main.pdf` |
+|---|---|---|
+| Pages | **54** | 33 |
+| Words (extracted from the PDF) | 12,108 | **12,567** |
+| Page size | US Letter, 612 × 792 pt | A4, 595 × 842 pt |
+
+Three causes, in order of size:
+
+1. **Line spacing.** `elsarticle`'s `review` option sets `\@blstr{1.5}` — the old
+   PDF is 1.5× line-spaced. `sn-jnl` is single-spaced.
+2. **Paper size.** A4 is ~50 pt taller per page than US Letter.
+3. **Reference list.** `sn-basic` abbreviates ("Shaw R, Luo Y" + *et al*) where
+   the old inlined list spelled out every author and editor in full — about 1,100
+   words shorter.
+
+The word count went *up* mainly because author–year citations
+("Shaw et al. 2022") are longer than "[1]".
+
+Independent confirmation that the body text is unchanged: the same word counter
+run over the old `.tex` and the new `.tex` returns **7,873 words on both sides**,
+and a line diff of the migrated body shows only whitespace at section joins plus
+the one intended footnote removal (section 2).
+
+If you compare word frequencies between the two PDFs directly, note two
+extraction artifacts that look alarming but are not real:
+
+- The old PDF's `fi`/`fl` ligatures do not decode — "fields" extracts as "elds",
+  "significant" as "signicant". Those words are present in both documents.
+- "Mann--Kendall" extracts as one token from the old PDF and two from the new
+  (the en-dash differs), so "mann" and "kendall" appear to jump from 0 to 7.
+- "Figure 1" became "Fig. 1" — that is Springer's cross-reference style, set by
+  the class.
+
+---
+
 ## 3. Changes that alter what the PDF says
 
 ### 3.1 `Sultana2021` now cites a different paper — **please confirm**
@@ -87,23 +128,64 @@ Two further points for the record:
   `kamal2024scientific` but different authors, year and DOI. Worth confirming
   that `10.1038/s41598-021-89214-4` resolves to the Sultana paper.
 
-### 3.2 Reference list is 67 entries, was 68
+### 3.2 `islam2026enso` now credits different authors — **please confirm**
+
+Same failure mode as 3.1, found by a later, more thorough audit. Both sources
+carry the **same DOI** `10.1007/s44274-026-00533-6`, same title, same journal and
+same year — but disagree completely about who wrote it:
+
+| | Authors |
+|---|---|
+| Old printed list | Mohsin M, Ghosh T, Akter F, Sarkar S, Mullick MRA (2026), *Discover Environment* **4**, 29 |
+| `references.bib` (now used) | Islam, Md. Ariful and others — **no volume, no pages** |
+
+One of these attributions is factually wrong for that DOI. Per instruction the
+`.bib` wins and was left unedited.
+
+Consequences:
+
+- Three in-text citations now read "Islam et al. (2026)" where the old PDF read
+  "Mohsin et al. (2026)" — `new/main.tex` lines 252, 966, 984.
+- The reference entry loses **volume 4 and page 29**; `references.bib` has neither.
+
+**Please check the DOI and tell me which author list is correct.**
+
+### 3.3 Reference list is 67 entries, was 68
 
 `hunter1999` had a printed `\bibitem` but is never cited, so BibTeX drops it.
 Six further `.bib` entries are never cited and do not print: `Bergstra2012`,
 `hasan2025sylhet`, `hunter1999`, `rahman2021heatindex`, `saha2025adaptability`,
 `xu2025humidexurinary`.
 
-### 3.3 `faisal2022` spelling
+### 3.4 Complete reference audit — all 67 entries, all fields
 
-Printed list said "urbanisation"; `.bib` says "urbanization". The `.bib` wins.
+The first check compared only **title, year, journal and DOI**, which is why 3.2
+was missed. A second pass compared `author`, `title`, `journal`, `booktitle`,
+`year`, `volume`, `number`, `pages`, `publisher` and `doi` in both directions for
+every entry. Full result:
 
-### 3.4 Citations are now author–year
+| Entry | What differs | Severity |
+|---|---|---|
+| `Sultana2021` | author, title, journal, volume, pages — **a different paper** (3.1) | substantive |
+| `islam2026enso` | author entirely; loses volume 4 and page 29 (3.2) | substantive |
+| `faisal2022` | "urbani**s**ation" → "urbani**z**ation" | cosmetic |
+| `iso7243_2017` | `.bib` title carries an em-dash the printed title lacked | cosmetic |
+| `saha2025postescalation` | pages `157--158` → `157-158` (en-dash becomes hyphen) | cosmetic |
+
+**The other 62 entries match on every compared field.**
+
+Detail *lost*: only `islam2026enso` (volume, pages).
+Detail *gained*: 31 entries pick up issue numbers or publishers that
+`references.bib` carries and the old hard-coded list omitted — e.g. `Abrar2022`
+(number 9, MDPI), `liljegren2008` (number 10, Taylor & Francis), `raymond2020`
+(number 19). The regenerated list is more complete than the old one.
+
+### 3.5 Citations are now author–year
 
 Was `[1]`, `[2]` (elsarticle default). Now `(Shaw et al. 2022)` as *Climatic
 Change* requires. Reference list is alphabetical by first author surname.
 
-### 3.5 Data availability statement
+### 3.6 Data availability statement
 
 Verbatim from old lines 1156–1164 **except** that the Zenodo DOI and the
 dashboard URL are replaced with "withheld for double-blind peer review; given on
