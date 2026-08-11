@@ -1,0 +1,718 @@
+\documentclass[pdflatex,sn-mathphys-ay]{sn-jnl}
+
+%%%% Standard Packages
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage[title]{appendix}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{manyfoot}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{url}
+
+%% Custom Macros from Manuscript
+\newcommand{\degC}{\ensuremath{^{\circ}\mathrm{C}}}
+\newcommand{\ph}[1]{\textbf{[PLACEHOLDER: #1]}}
+\newcommand{\vi}{\textbf{[verify-intended]}}
+
+\graphicspath{{../outputs/figures/}}
+
+\raggedbottom
+
+\begin{document}
+
+\title[Projections of Heat-Stress Conditions Across Bangladesh]{Projections of Heat-Stress Conditions Across Bangladesh Using Explainable Machine Learning and Climate Trend Integration}
+
+%%=============================================================%%
+%% Authors and Affiliations (sn-jnl format)
+%%=============================================================%%
+
+\author*[1]{\fnm{Mohammad Khalid Hasan} \sur{Nabil}}\email{nabil23549009015@student.bup.edu.bd}
+
+\author[1]{\fnm{Tahia} \sur{Parsha}}
+
+\author[1]{\fnm{Musayeb Hussain} \sur{Usama}}
+
+\author[1]{\fnm{Atika} \sur{Akter}}
+
+\author[2]{\fnm{Ivan} \sur{Grgić}}
+
+\affil*[1]{\orgdiv{Department of Information Communication Technology}, \orgname{Faculty of Science and Technology, Bangladesh University of Professionals}, \orgaddress{\city{Dhaka}, \postcode{1216}, \country{Bangladesh}}}
+
+\affil[2]{\orgdiv{Mechanical Engineering Faculty in Slavonski Brod}, \orgname{University of Slavonski Brod}, \orgaddress{\city{Slavonski Brod}, \postcode{35000}, \country{Croatia}}}
+
+%%==================================%%
+%% Abstract
+%%==================================%%
+
+\abstract{Rising heat and humidity increasingly threaten health, labour, and energy systems across Bangladesh, yet operational planning needs district-resolved, uncertainty-aware projections of the specific conditions that drive human heat stress[cite: 1]. We present a deterministic, reproducible machine-learning framework that projects seven temperature-correlated heat-stress conditions, heat-index comfort, wet-bulb temperature, indoor and outdoor wet-bulb globe temperature, cooling degree-days, ultraviolet exposure, and dew-point moisture stress for all 64 districts of Bangladesh[cite: 1]. Four gradient-boosting ensembles are trained on the 2014--2024 monthly record using future-known seasonal features; the observed 1980--2024 Theil--Sen trend is superimposed so that projections evolve realistically, and all thermal indices are recomputed from the projected primary variables to avoid target leakage[cite: 1]. Validated against withheld 2025 observations, the projected indices attain median $R^{2}$ of $0.95$--$0.98$, and their operational risk classes match observations to within one class in $100\%$ of district-months[cite: 1]. A Mann-Kendall analysis shows the maximum temperature rising in every district (median $+0.56\,^{\circ}$C per decade) while minimum temperature remains flat, indicating a widening diurnal range; the coastal and southwestern zones carry the greatest combined burden, and ultraviolet and oppressive humidity hazards are effectively nationwide[cite: 1]. District choropleths, zonal envelopes, and calibrated uncertainty bands provide a directly actionable heat-stress outlook while transparently bounding the models' skill relative to climatology[cite: 1]. The complete 64-district, seven-condition projection is openly explorable through an accompanying interactive web application[cite: 1].}
+
+\keywords{heat stress, wet-bulb temperature, WBGT, seasonal projection, gradient boosting, Mann--Kendall trend, Bangladesh, climate adaptation}
+
+\maketitle
+
+%% ===========================================================================
+\section{Introduction}\label{sec:intro}
+Anthropogenic climate change has fundamentally altered the frequency, intensity, and the duration of extreme heat events worldwide[cite: 1]. Mean surface air temperatures have risen steadily since the pre-industrial era, and this warming has been accompanied by a disproportionate increase in heatwaves, prolonged humid spells, and compound heat--humidity extremes that the human body increasingly struggles to tolerate \citep{Shaw2022IPCCAsia}[cite: 1]. Unlike many climate hazards, extreme heat acts as a silent stressor, producing cumulative physiological strain that is frequently under-reported in official mortality and morbidity statistics yet carries substantial public-health, occupational, and economic consequences \citep{Kjellstrom2019}[cite: 1]. Understanding how heat stress manifests across different climatic and geographic settings have therefore become an urgent priority for adaptation planning[cite: 1].
+
+Air temperature alone does not represent the heat stress the human body actually experiences and can lead to misleading assessments[cite: 1]. Relative humidity, solar radiation, wind, and atmospheric moisture all govern the body's ability to shed heat through evaporation, radiation, and convection; elevated humidity in particular suppresses the evaporation of sweat, the body's primary cooling mechanism so that core temperature rises even when the air is not exceptionally hot \citep{steadman1979}[cite: 1]. To capture these combined effects, researchers have developed composite heat-stress indices that now underpin public-health warning systems, occupational heat-safety standards \citep{iso7243_2017}, and cooling-energy demand projections \citep{spinoni2018}, and that increasingly recognise the approach of physiological survivability limits under extreme humid heat \citep{raymond2020}[cite: 1].
+
+South Asia is among the regions most acutely exposed to escalating heat stress, owing to its dense population, high monsoon-season humidity, and large share of outdoor and informal-sector labour[cite: 1]. Bangladesh occupies a uniquely exposed position within it: a tropical monsoon climate, low-lying deltaic geography, and exceptionally high population density combined with rapid, unplanned urbanisation to let heat stress intensify quickly and distribute unevenly across the landscape \citep{Sultana2021}[cite: 1]. Critically, the country is not climatically homogeneous; its territory spans drought-prone northwestern plains with continental microclimates, a densely built and heat-retentive central urban core exhibiting strong urban heat-island effects, low-lying coastal districts shaped by maritime humidity, seasonally inundated wetland basins, and elevated hill tracts with distinct topographic regimes[cite: 1]. Each zone is expected to experience thermal stress through different pathways and at different intensities, yet most existing heat-risk assessments in Bangladesh continue to treat the country as a single climatic unit or rely on a narrow selection of indices, most commonly ambient temperature alone without accounting for the multi-dimensional nature of heat exposure \citep{Abrar2022}[cite: 1].
+
+A parallel gap exists in temporal scope and forecasting capability[cite: 1]. Most prior work on heat stress in Bangladesh is retrospective in orientation or resolved only to divisional or national summaries, and very few studies integrate long-term climatological baselines with near-term machine-learning forecasting to project how these selected temperature correlated conditions will evolve at the district level[cite: 1]. This omission matters, because heat-risk management, whether through early-warning systems, occupational health policy, or urban cooling infrastructure, requires knowing not only where risk is highest today, but where and how quickly it is worsening[cite: 1]. A recent wet-bulb globe temperature analysis across Bangladesh reported warming of roughly 0.08--0.5\,\degC per decade, most pronounced in the southeast and northeast \citep{kamal2024scientific}, underscoring the need for district-resolved, multi-index projection[cite: 1].
+
+This study addresses these gaps through the Temperature-Correlated Conditions (TCC) framework: an integrated set of seven temperature-dependent indicators heat-index comfort, wet-bulb temperature, indoor and outdoor wet-bulb globe temperature, heatstroke risk, cooling degree-days, ultraviolet exposure, and dew-point moisture stress, each capturing a distinct physiological, biophysical, or the infrastructural dimension of heat-related risk[cite: 1]. Applying this framework to 45~years (1980--2024) of district-level meteorological records across all 64 districts and six climatically distinct zones, we (i)~train an ensemble of gradient-boosting models \citep{Breiman2001} on future-known seasonal features and re-impose the observed long-term trend so that projections evolve realistically rather than collapsing onto the last training year; (ii)~recompute every thermal index from the projected primary variables rather than predicting the indices directly, eliminating target leakage and preserving the physical coupling among temperature, humidity, and radiation; (iii)~generate 24-month district-level projections (2025--2026) with analytically propagated uncertainty bands; and (iv)~validate the projections out-of-sample against independent 2025 observations, benchmark their skill transparently against seasonal-naive and climatological baselines, and characterise long-term change with the non-parametric Mann--Kendall test[cite: 1]. The best model per variable is selected by a multi-attribute simple-additive-weighting scheme with a generalisation-gap penalty \citep{Hwang1981}[cite: 1].
+
+Two features distinguish the analysis[cite: 1]. First, results are reported at full district resolution through choropleth maps rather than being aggregated away, exposing spatial gradients, such as the coastal concentration of humid-heat burden, that zonal summaries obscure[cite: 1]. Second, we are explicit about the limits of predictive skill: at a monthly resolution the ensembles essentially match climatology, so their value lies in providing spatially complete, uncertainty-aware, and trend-consistent projections of physiologically relevant indices rather than in reducing monthly error[cite: 1]. One indicator, heatstroke risk, was found to lack out-of-sample skill and is retained only descriptively[cite: 1]. The remainder of this paper details the data and methods, presents the validated projections and observed trends, and discusses their implications for heat-adaptation planning across Bangladesh[cite: 1].
+
+%% ===========================================================================
+\section{Literature Review}\label{sec:litreview}
+
+Human exposure to heat is not adequately captured by dry-bulb air temperature alone[cite: 1]. A growing body of work therefore evaluates compound thermal indices that combine temperature with humidity, radiation, and wind to describe how heat is actually experienced and how it threatens health, labour productivity, and energy demand[cite: 1]. This section synthesises recent international and Bangladesh-focused literature across the seven temperature-correlated conditions addressed in this study, the machine-learning methods used to forecast them, and the urban and regional context that motivates a district-resolved, multi-index treatment[cite: 1].
+
+\subsection{The physiological basis of thermal-stress indices}
+\citet{raymond2020} provided seminal evidence that a wet-bulb temperature (WBT) of $35\,\degC$ represents the physiological limit for human survival, showing that humid-heat extremes had already more than doubled in frequency between 1979 and 2017 and shifting the field's focus from ambient temperature toward compound heat--humidity metrics[cite: 1]. The inadequacy of dry-bulb temperature as a standalone indicator is well established: high humidity impairs the evaporative efficiency of perspiration, causing perceived loads to exceed measured air temperature \citep{steadman1979}[cite: 1]. The heat index formalises this through the regression of \citet{rothfusz1990}, operationalised by the U.S.\ National Weather Service[cite: 1]. The wet-bulb globe temperature (WBGT), originally developed by \citet{yaglou1957} for military training and codified in ISO~7243 \citep{iso7243_2017}, extends the framework to radiant load, making it the international standard for occupational heat-stress assessment \citep{parsons2006}[cite: 1]. The empirical WBT approximation of \citet{stull2011}, derived by gene-expression programming with a mean absolute error below $0.3\,\degC$, provides a computationally efficient estimate applicable to station and reanalysis data alike[cite: 1]. Cooling degree-days (CDD) complement these physiological indices by quantifying the cumulative thermal energy above a baseline, a standard proxy for building cooling demand \citep{spinoni2018, bhatnagar2018}; the UV index \citep{who2002} captures the solar-radiation dimension of outdoor exposure, and dew-point temperature offers a stable, temperature-independent measure of atmospheric moisture that outperforms relative humidity as a predictor of perceived discomfort \citep{lawrence2005}[cite: 1]. Together these conditions span the physiological, biophysical, and infrastructural dimensions of heat risk that the present study projects jointly, against a backdrop of accelerating global warming documented by the IPCC \citep{ipcc2022ar6}[cite: 1].
+
+\subsection{Observed heat-stress trends in Bangladesh}
+Bangladesh is among the most heat-exposed nations, and a dense body of station-based work documents its warming[cite: 1]. \citet{rahman2021} produced the first comprehensive spatiotemporal appraisal of historical and projected heat-index change, finding statistically significant upward trends across most districts, sharpest in the pre-monsoon season[cite: 1]. \citet{tanim2024heat} analysed 60~years (1961--2020) of records from 17 stations using the Discomfort Index, Humidex, and WBT, reports a spatially uneven rise in heat discomfort that is steepest along the coastal belt and driven primarily by rising air temperature[cite: 1]. For WBGT specifically, \citet{kamal2024scientific} provided the anchor analysis, computing outdoor WBGT from 1979--2021 reanalysis with the physically based Liljegren model and finding a national rise of $0.08$--$0.5\,\degC$ per decade, a fivefold expansion of the area affected by high-to-extreme stress, and air temperature as the dominant driver ($85.9\%$ relative importance); a companion paper developed simplified regression equations to lower the computational barrier to WBGT adoption \citep{kamal2024ijc}[cite: 1]. Temperature-extreme indices are likewise intensifying: \citet{ahmed2022} found lengthening warm-spell durations, particularly in coastal regions, and \citet{islam2021extremes} identified warm-index trends dominated by post-2000 increases across 27 stations[cite: 1]. Trends in degree-days were examined by \citet{islam2020cdd}, who reported significant CDD increases with the southwestern and central zones showing the highest annual means[cite: 1]. At the health end, \citet{miah2026} linked ambient temperature and heat index to heatstroke mortality in an ecological time-series analysis, reinforcing the public-health urgency of a multi-index approach[cite: 1].
+
+\subsection{Urban heat islands and zone-specific dynamics}
+Urban heat-island (UHI) intensity amplifies background warming, especially within the densely built central zone examined here[cite: 1]. \citet{dewan2021} characterised diurnal and seasonal UHI across five major Bangladeshi cities from satellite land-surface temperature, finding the greatest magnitude in the pre-monsoon period and the largest daytime surface UHI in Dhaka ($2.74\,\degC$), followed by Chittagong ($1.92\,\degC$) and Khulna ($1.27\,\degC$)[cite: 1]. \citet{faisal2022} reported that UHI intensity rose substantially across most districts from 2000 to 2020, with Dhaka and Mymensingh steepest, and \citet{park2024} showed that Dhaka's UHI is strongest in winter ($0.95\,\degC$) and weakest during the monsoon ($0.23\,\degC$), with heat waves producing distinctive synoptic patterns that compound local warming[cite: 1]. These findings support treating Bangladesh's urban core as a distinct climatic zone and, more broadly, motivate the six-zone structure adopted in this study[cite: 1].
+
+\subsection{Machine learning for meteorological and thermal-index forecasting}
+Ensemble tree methods have consistently outperformed conventional statistical and numerical approaches for temperature and humidity forecasting in data-rich, strongly seasonal settings[cite: 1]. The gradient-boosting family XGBoost \citep{chen2016xgboost}, LightGBM \citep{ke2017lightgbm}, and CatBoost \citep{prokhorenkova2018catboost} recurs as a strong, interpretable baseline across environmental prediction problems[cite: 1]. In Bangladesh, \citet{islam2026enso} found XGBoost to be most accurate for seasonal temperature prediction across 29 stations ($R^{2}=0.88$ for maximum and $0.97$ for minimum temperature) when trained on ENSO predictors; \citet{akter2025} found Random Forest best for humidity forecasting at northern stations over a 40-year record; and \citet{rahman2024rnlstm} found a stacking ensemble outperformed RNN--LSTM and decision forest models for average-temperature prediction over a 60-year series[cite: 1]. Most directly, \citet{mollah2026mlheatindex} benchmarked ARIMAX, SARIMAX, Random Forest, XGBoost, and LSTM on 3-hourly Dhaka records (2014--2023) for conditional, scenario-based heat-index projection, with Random Forest achieving the lowest error (RMSE~$=0.85\,\degC$, $R^{2}=0.987$) a close methodological precedent for the present work[cite: 1]. The value of combining gradient-boosting learners is illustrated by \citet{kim2023toxins}, whose stacked XGBoost/LightGBM/CatBoost ensemble reached $R^{2}=0.93$, outperforming any single model[cite: 1]. Fourier-based encoding of seasonal cycles as sine and cosine terms have been shown to improve both accuracy and efficiency on meteorological series \citep{galansales2024}, directly motivating the Fourier feature layer used here[cite: 1]. Comparative studies elsewhere reinforce the transferability of these methods \citep{hanoon2021ml,abdelsattar2025ml}, while the validation of deep-learning weather models on recent extreme events \citep{pasche2025validating} and analyses of the distinct atmospheric drivers of humidex versus temperature heatwaves \citep{jeong2025humidex} situate the forecasting problem in its broader physical context[cite: 1].
+
+\subsection{Per-condition modelling and international context}
+Beyond the anchor WBGT and heat-index studies, the individual conditions have distinct literatures[cite: 1]. For the heat-index/Humidex family, \citet{sojan2024humidheat} showed that humid-heat stress in India is intensifying disproportionately faster than dry heat; \citet{kushwaha2026humidex} projected air temperature as the dominant driver of future extreme-Humidex days across 15 CMIP6 models; \citet{scoccimarro2017humidity} established that perceived-temperature extremes intensify faster than temperature extremes owing to rising humidity; \citet{saha2025postescalation} documented a post-2000 escalation of humid heatwaves across Northeast India and Bangladesh; and \citet{tabassum2025coolroofs} connected a cool-roof intervention to measurable Humidex reductions during a Dhaka heat wave[cite: 1]. Heatstroke-risk modelling has matured chiefly outside Bangladesh \citet{xuh2024heatstroke} trained interpretable models linking meteorology to heatstroke incidence in South China with \citet{ehsan2026extremeheat} providing a recent Bangladesh-focused machine-learning forecast of extreme-heat health impact; consistent with this thin evidence base, the present study computes a heatstroke indicator but, as reported below, excludes it from the validated results for a lack of out-of-sample skill[cite: 1]. For CDD, \citet{bilgili2023cdd} showed that classical SARIMA models remain competitive with machine learning when the seasonal structure is strong[cite: 1]. UV-index modelling is comparatively underexplored in the regional literature: \citet{teggi2026uvindex} recently derived the UV index from reanalysis validated against ground stations, whereas in the present framework, the UV index is instead predicted directly as a modelled variable[cite: 1]. Dew-point prediction has a well-developed machine-learning lineage, progressing from extreme-learning-machine and kernel baselines \citep{mohammadi2015elm,qasem2019dewpoint}, to gradient-boosted trees exploiting cross-station information \citep{yao2022catboost}, to attention-based sequence models with explainability \citep{abdullah2025xai}[cite: 1]. Internationally, the stakes are large: \citet{parsons2021labor} estimated humid-heat labour losses equivalent to roughly $1.7\%$ of 2017 global GDP, with South Asian outdoor workers among the worst affected, and \citet{flouris2022} meta-analysed a significant negative association between WBGT exposure and manual work capacity[cite: 1]. Longer-term projections for Bangladesh under CMIP6 \citep{khatun2024} indicate continued rises in warm-spell duration and tropical nights, providing the multi-decadal backdrop against which the near-term (2025--2026) forecasts were generated here should be read[cite: 1].
+
+\subsection{Research gaps addressed by this study}
+Three gaps emerge from this review[cite: 1]. First, although individual indices chiefly WBGT and the heat index have been examined for Bangladesh in isolation, no study has simultaneously computed, validated, and forecast seven complementary thermal-stress conditions within a single framework, at district resolution, across climatically distinct zones[cite: 1]. Second, existing Bangladeshi forecasting work has relied on conventional statistics, CMIP6 downscaling, or a single-algorithm machine learning; the multi-algorithm gradient-boosting ensemble with Fourier feature engineering and an explicitly re-imposed observational trend proposed here has not previously been applied to thermal-stress forecasting in this context[cite: 1]. Third, the six-zone climatological structure of Bangladesh, Northwest dry-hot plains, Central urban core, Southwest saline-drought belt, Coastal maritime zone, Haor wetland basins, and Hill Tracts has not previously organised a multi-index heat-risk assessment, leaving intra-national thermal heterogeneity systematically undercharacterised[cite: 1]. In contrast to studies built on ERA5 reanalysis, the present work is driven by station-derived Visual Crossing records and validated out-of-sample against independent 2025 observations, providing an externally verified, uncertainty-aware, and district-resolved projection across all seven conditions[cite: 1].
+
+%% ===========================================================================
+\section{Materials and Methods}\label{sec:methods}
+
+This study builds a deterministic, reproducible pipeline that (i) learns the monthly climatology of seven primary meteorological variables for each of the 64 districts of Bangladesh from a recent, high-quality window; (ii) superimposes the long-term observed climate trend so that projections evolve realistically beyond the training period; (iii) recomputes physiologically relevant thermal indices from the projected primary variables to avoid target leakage; (iv) quantifies projection uncertainty by first-order error propagation; and (v) validates the projected 2025 fields against independent observations[cite: 1]. All methodological constants are fixed a~priori and are reported here so that the workflow can be audited and reproduced exactly[cite: 1].
+
+\subsection{Study area and climatic zonation}\label{sec:zones}
+The analysis covers all 64 administrative districts of Bangladesh[cite: 1]. For synthesis and reporting, districts are grouped into six climatic zones: (1)~Northwest Extreme Heat Zone (dry hot plains, including the Barind Tract), (2)~Central Urban Heat Zone (urban heat-island region), (3)~Southwest Hot--Dry Zone (drought- and salinity-affected areas), (4)~Coastal Humid Heat Zone (the coastal belt), (5)~Haor/Wetland Humid Zone (the haor basin), and (6)~Hill Tract Zone (elevated terrain)[cite: 1]. The zonation is author-defined but grounded in converging, established frameworks: the agro-climatic regionalisation of the Bangladesh Meteorological Department and the agro-ecological/physiographic zonation of Bangladesh \citep{FAO1988,Rashid1991}, together with recognised hydro-ecological units (Barind Tract, Sundarbans coastal belt, haor basin)[cite: 1]. Each district is flagged as a \emph{confirmed} (high-confidence) or \emph{provisional} assignment, and one representative \emph{exemplar} district per zone is retained for main-text figures (Fig.~\ref{fig:mapzones})[cite: 1]. The complete district-to-zone mapping is provided in the supplementary material[cite: 1].
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.72\textwidth]{map_zonation.png}
+\caption{Climatic zonation of Bangladesh: the 64 districts grouped into six zones, with the exemplar district of each zone labelled.}\label{fig:mapzones}
+\end{figure}
+
+\subsection{Data and preprocessing}\label{sec:data}
+Daily meteorological records were obtained from the Visual Crossing Weather API \citep{vc} for each district[cite: 1]. Seven primary (physically measured) variables are used: mean, maximum, and minimum near-surface air temperature ($\degC$); relative humidity (\%); dew-point temperature ($\degC$); downward solar (shortwave) radiation, and the ultraviolet (UV) index[cite: 1]. The historical record spans 1980--2024; an additional file covering 2025 (through 20~November 2025; the final month is partial) is reserved exclusively for out-of-sample validation[cite: 1].
+
+Because humidity is noisy in the earliest decades and solar/UV are unavailable before 2014, the machine-learning window is restricted to 2014--2024, whereas the full 1980--2024 record is used only for the observational trend analysis (Section~\ref{sec:trend})[cite: 1]. Daily values are aggregated to calendar-month means (month-start resampling), and residual gaps are filled by linear interpolation[cite: 1]. All modelling is performed on these monthly series[cite: 1].
+
+\subsection{Feature construction}\label{sec:features}
+To respect a strict \emph{future-known-features-only} constraint---no lags, rolling windows, or autoregressive terms that would be unavailable at projection time---each month is described by a deterministic seasonal--secular feature vector[cite: 1]. Seasonality is encoded by a truncated Fourier series with period $P=12$~months and $H=3$ harmonics[cite: 1],
+\begin{equation}
+\sin_{h}(m)=\sin\!\Big(\frac{2\pi h m}{P}\Big),\qquad
+\cos_{h}(m)=\cos\!\Big(\frac{2\pi h m}{P}\Big),\qquad h=1,\dots,H,
+\end{equation}
+where $m$ is the calendar-month index[cite: 1]. The secular component is the calendar year[cite: 1]. The full design vector is therefore $\mathbf{x}=[\,\mathrm{year},\ \sin_{1},\cos_{1},\dots,\sin_{3},\cos_{3}\,]$ (seven features)[cite: 1].
+
+\subsection{Predictive models}\label{sec:models}
+Four gradient-based tree ensembles are trained independently for every district--variable pair: Random Forest \citep{Breiman2001}, XGBoost \citep{chen2016xgboost}, LightGBM \citep{ke2017lightgbm}, and CatBoost \citep{prokhorenkova2018catboost}[cite: 1]. Hyperparameters are fixed a~priori and applied uniformly across all districts and variables so that results are mutually comparable and the pipeline is fully deterministic (global random seed $=42$)[cite: 1]. The fixed configurations are listed in the supplementary material[cite: 1].
+
+\subsection{Trend-aware detrending and projection}\label{sec:detrend}
+Tree ensembles cannot extrapolate beyond the range of their training features; if the calendar year is used directly as a predictor, every projected year collapses onto the last training year, producing a static (trendless) forecast[cite: 1]. To carry the observed climate trend forward while preserving the future-known constraint, each primary variable is detrended before learning and re-trended at prediction time[cite: 1]. For district--variable series $y(t)$ with continuous time $t$ (in years), a Theil--Sen slope $\hat{\beta}$ is estimated from the annual-mean series[cite: 1],
+\begin{equation}
+\hat{\beta}=\operatorname{median}_{\,i<j}
+\frac{\bar{y}_{j}-\bar{y}_{i}}{t_{j}-t_{i}},
+\label{eq:theilsen}
+\end{equation}
+where $\bar{y}_{k}$ is the mean of year $k$[cite: 1]. To keep the projected trend consistent with the manuscript's observational trend analysis, $\hat{\beta}$ is taken from the robust 1980--2024 record for the five variables that span it (mean/max/min temperature, humidity, dew point); solar radiation and the UV index, which lacks a pre-2014 record, falls back to a Theil--Sen fit over their available 2014--2024 window[cite: 1]. The ensembles are trained on the deseasonalised residual $r(t)=y(t)-\hat{\beta}\,t$, so they model only the seasonal signal; the linear trend is added back at prediction time[cite: 1],
+\begin{equation}
+\hat{y}(t)=\hat{r}(t)+\hat{\beta}\,t.
+\end{equation}
+This design makes each projected year differ from the previous one by exactly $\hat{\beta}$ and guarantees that the projected inter-annual tendency equals the reported Mann--Kendall/Sen slope (Section~\ref{sec:trend})[cite: 1]. We emphasise that this trend term is included for physical consistency with the observed record, not to improve the short-horizon accuracy: at a monthly resolution, the seasonal cycle dominates, so the trend contributes only a small secular adjustment[cite: 1].
+
+The winning model per variable (Section~\ref{sec:saw}) is refit on the full 2014--2024 residual and projected forward for a 24-month horizon (January~2025 through December~2026)[cite: 1]. Projected primary variables are clipped to physically plausible bounds before any downstream computation to prevent non-physical extrapolations from propagating into the indices[cite: 1].
+
+\subsection{Model evaluation and selection}\label{sec:saw}
+Reported test metrics use a strictly chronological hold-out: models are trained on 2014--2022 and tested on the withheld 2023--2024 period[cite: 1]. Generalisation is additionally assessed by five-fold \texttt{TimeSeriesSplit} cross-validation on the residual series[cite: 1]. For each candidate model, we record the coefficient of determination $R^{2}$ and root-mean-square error (RMSE) on the chronological test set, the cross-validated $R^{2}$ ($\mathrm{CV}\text{-}R^{2}$), a generalisation gap $\mathrm{Gap}=\lvert R^{2}-\mathrm{CV}\text{-}R^{2}\rvert$, and an operational tolerance accuracy $A_{\tau}$ defined as the fraction of test months whose absolute error does not exceed a variable-specific tolerance $\tau$[cite: 1],
+\begin{equation}
+A_{\tau}=\frac{1}{N}\sum_{n=1}^{N}\mathbf{1}\!\big(\lvert y_{n}-\hat{y}_{n}\rvert \le \tau\big).
+\end{equation}
+
+The winning model is chosen by Simple Additive Weighting (SAW), a multi-attribute decision-making scheme \citep{Hwang1981}, with a generalisation-gap penalty[cite: 1]. Each criterion $c$ is min--max normalised across the four candidates directly for the benefit criteria and by complement for the cost criteria[cite: 1],
+\begin{equation}
+\tilde{s}_{c}=
+\begin{cases}
+\dfrac{s_{c}-\min_{c}}{\max_{c}-\min_{c}}, & c\ \text{maximised},\\[1.2ex]
+\dfrac{\max_{c}-s_{c}}{\max_{c}-\min_{c}}, & c\ \text{minimised},
+\end{cases}
+\end{equation}
+and the composite score is the weighted sum $S=\sum_{c} w_{c}\,\tilde{s}_{c}$, with weights $w_{R^{2}}=0.25$, $w_{\mathrm{CV}\text{-}R^{2}}=0.25$, $w_{\mathrm{RMSE}}=0.20$, $w_{\mathrm{Gap}}=0.20$, and $w_{A_{\tau}}=0.10$ (RMSE and Gap treated as cost criteria)[cite: 1]. The highest-scoring model wins; models with $\mathrm{Gap}>0.10$ are additionally flagged as overfitting risks[cite: 1].
+
+\subsection{Thermal index computation}\label{sec:indices}
+To avoid target leakage, thermal-stress indices are never predicted directly; they are recomputed analytically from the \emph{projected} primary variables[cite: 1]. The heat index (HI) uses the U.S.\ National Weather Service Rothfusz regression \citep{rothfusz1990}[cite: 1]. With temperature $T_F$ and relative humidity $R$ (in $^{\circ}$F and \%)[cite: 1],
+\begin{align}
+\mathrm{HI} =\ & -42.379 + 2.04901523\,T_F + 10.14333127\,R - 0.22475541\,T_F R \nonumber\\
+   & - 6.83783\!\times\!10^{-3} T_F^{2} - 5.481717\!\times\!10^{-2} R^{2} + 1.22874\!\times\!10^{-3} T_F^{2} R \nonumber\\
+   & + 8.5282\!\times\!10^{-4} T_F R^{2} - 1.99\!\times\!10^{-6} T_F^{2} R^{2},
+\label{eq:hi}
+\end{align}
+with the standard low-humidity and high-humidity adjustments applied within their validity ranges and a simplified formula substituted below $80^{\circ}$F; the result is returned in $\degC$[cite: 1]. Wet-bulb temperature $T_w$ follows the empirical formulation of \citet{stull2011}[cite: 1],
+\begin{align}
+T_w =\ & T\,\arctan\!\big[0.151977\,(R+8.313659)^{1/2}\big] + \arctan(T+R) \nonumber\\
+     & - \arctan(R-1.676331) + 0.00391838\,R^{3/2}\arctan(0.023101\,R) - 4.686035,
+\label{eq:wetbulb}
+\end{align}
+
+Wet-bulb globe temperature is computed in two variants: a shade variant, in which the globe temperature is set equal to air temperature under the assumption of no direct-beam load, and a sun variant, in which the globe temperature is estimated from downward shortwave radiation $S$ ($\mathrm{W\,m^{-2}}$) using the linear approximation of \citet{tonouchi2006}, as documented and inter-compared by \citet{lemke2012}[cite: 1]:
+\begin{align}
+T_g^{\text{shade}} &= T, \qquad
+T_g^{\text{sun}} = T + c_S\,S, \qquad c_S = 0.025\ \mathrm{W^{-1}m^{2}}.
+\end{align}
+Substituting into the standard ISO~7243 weightings \citep{iso7243_2017,yaglou1957} gives[cite: 1]
+\begin{align}
+\mathrm{WBGT_{shade}} &= 0.7\,T_w + 0.3\,T, \\
+\mathrm{WBGT_{sun}}   &= 0.7\,T_w + 0.2\,T_g^{\text{sun}} + 0.1\,T = \mathrm{WBGT_{shade}} + 0.005\,S .
+\end{align}
+The coefficient $c_S$ governs the sensitivity of global temperature to radiation and is inversely related to convective cooling at the globe surface[cite: 1]. In the global energy balance, the convective heat transfer coefficient scales as $13.28\,v^{0.58}$ \citep{lemke2012}, so that $c_S \approx 0.018$ at a reference wind speed of $1\,\mathrm{m\,s^{-1}}$ reproducing the value fitted by \citet{tonouchi2006} and rises as wind speed falls[cite: 1]. The value adopted here corresponds to calm conditions of approximately $0.5$--$0.6\,\mathrm{m\,s^{-1}}$[cite: 1]. Because wind is not among the modelled primary variables (Section~\ref{sec:data}), the calm-air limit is adopted deliberately: it maximises the estimated radiant load and therefore biases the outdoor index toward, rather than away from, the identification of hazardous conditions, which is the conservative choice for a public-health screening instrument[cite: 1].
+
+Cooling degree-days are expressed as a monthly-mean daily rate about an $18\,\degC$ base[cite: 1],
+\begin{equation}
+\mathrm{CDD}=\max\!\Big(\frac{T_{\max}+T_{\min}}{2}-18,\ 0\Big).
+\label{eq:cdd}
+\end{equation}
+
+A composite heatstroke-hazard score (a sigmoid of the heat index modulated by a wet-bulb multiplier) was also implemented and recalibrated for monthly-mean inputs[cite: 1]. However, in external validation, it produced a negative out-of-sample $R^{2}$ (i.e.\ worse than a constant predictor), so it is \emph{excluded from all predictive results} and retained only as a descriptive projected field[cite: 1]. This exclusion is stated explicitly to avoid over-interpretation of an index that does not demonstrate skill[cite: 1].
+
+\subsection{Operational heat-stress conditions and risk categorisation}\label{sec:conditions}
+The projected fields are organised into seven temperature-correlated heat-stress conditions of operational relevance: (1)~heat-index comfort (perceived temperature under humidity); (2)~wet-bulb temperature (the thermodynamic limit of evaporative cooling); (3)~wet-bulb globe temperature in indoor (shade) and outdoor (sun) forms (the occupational heat-exposure standard); (4)~heatstroke risk; (5)~cooling degree-days (a building-cooling energy proxy); (6)~ultraviolet exposure risk; and (7)~dew-point moisture stress[cite: 1]. Conditions~(6) and~(7) are obtained directly from the projected UV-index and dew-point fields, which are among the primary modelled variables (Section~\ref{sec:data}); condition~(4) is excluded from predictive results as noted above[cite: 1].
+
+To move from continuous values to operational meaning, four of the conditions are additionally mapped to established risk-category systems: the U.S.\ National Weather Service heat-index comfort classes (Comfortable, Caution, Extreme Caution, Danger, Extreme Danger); WBGT occupational-exposure classes (Low, Moderate, High, Extreme); the World Health Organisation UV-index classes (Low, Moderate, High, Very High, Extreme) \citep{who2002}; and dew-point human-comfort classes (Dry through Extremely Oppressive)[cite: 1]. Wet-bulb temperature~(2) and cooling degree-days~(5) are reported as continuous physical quantities[cite: 1]. The category boundaries are conventionally defined for daily peak values, because the present pipeline operates on monthly means, the extreme classes are seldom reached, and the categories should be read as describing \emph{typical monthly} conditions rather than daily peaks[cite: 1]. Categorisation skill is assessed against the observed 2025 fields by exact-match agreement and by agreement to within one adjacent class[cite: 1].
+
+\subsection{Uncertainty quantification}\label{sec:uncertainty}
+Projection uncertainty for the temperature--humidity indices is obtained by first-order (linearised) error propagation from the primary variable uncertainties[cite: 1]. For an index $I(x_1,\dots,x_k)$ with input standard deviations $\sigma_{x_j}$[cite: 1],
+\begin{equation}
+\sigma_{I}=\Bigg[\sum_{j}\Big(\frac{\partial I}{\partial x_j}\Big)^{2} \sigma_{x_j}^{2}\Bigg]^{1/2},
+\label{eq:errprop}
+\end{equation}
+where the input $\sigma_{x_j}$ are taken from each winning model's in-sample RMSE and representative sensitivity coefficients are used for the heat index, wet-bulb temperature, and WBGT[cite: 1]. The propagated $\sigma_{I}$ define the $68\%$ ($\pm\sigma_{I}$) and $95\%$ ($\pm1.96\,\sigma_{I}$) bands reported for the projected indices[cite: 1].
+
+\subsection{Baseline skill benchmarks}\label{sec:baselines}
+Model skill is benchmarked against two references evaluated on the same chronological test set: a seasonal-naive predictor (each test month set to the same calendar month one year earlier) and a monthly-climatology predictor (the training-period mean for each calendar month)[cite: 1]. Skill relative to a reference is[cite: 1]
+\begin{equation}
+\mathrm{SS}=1-\frac{\mathrm{RMSE}_{\text{model}}}{\mathrm{RMSE}_{\text{ref}}},
+\label{eq:skill}
+\end{equation}
+so that positive values indicate improvement over the reference[cite: 1].
+
+\subsection{External validation against observed 2025}\label{sec:validation}
+The 24-month projection includes calendar year 2025, for which independent observations were withheld from all training[cite: 1]. Projected monthly primary variables and recomputed indices are compared with the observed 2025 monthly series using $R^{2}$, RMSE, mean absolute error, and the tolerance-accuracy bands of Section~\ref{sec:saw}[cite: 1]. The final month (November~2025) is partial in the source data and is treated accordingly[cite: 1]. This constitutes a genuine, fully out-of-sample test of the projection[cite: 1].
+
+\subsection{Observational trend analysis}\label{sec:trend}
+Long-term trends are characterised on the full 1980--2024 annual-mean series using the non-parametric Mann--Kendall test with Theil--Sen slope estimation, computed independently of the predictive models (and therefore free of target leakage)[cite: 1]. The Mann--Kendall statistic is[cite: 1]
+\begin{equation}
+S=\sum_{k=1}^{n-1}\sum_{j=k+1}^{n}\operatorname{sgn}(x_j-x_k),
+\end{equation}
+with tie-corrected variance[cite: 1]
+\begin{equation}
+\operatorname{Var}(S)=\frac{n(n-1)(2n+5)-\sum_{i} t_i(t_i-1)(2t_i+5)}{18},
+\end{equation}
+where $t_i$ is the number of ties of extent $i$[cite: 1]. The standardised statistic[cite: 1]
+\begin{equation}
+Z=\begin{cases}
+(S-1)/\sqrt{\operatorname{Var}(S)}, & S>0,\\
+0, & S=0,\\
+(S+1)/\sqrt{\operatorname{Var}(S)}, & S<0,
+\end{cases}
+\end{equation}
+is referred to the standard normal distribution for a two-sided $p$-value, and Kendall's tau, $\tau = 2S/[n(n-1)]$, measures rank correlation over time[cite: 1]. The Theil--Sen slope (Eq.~\ref{eq:theilsen}) provides the trend magnitude, reported per decade[cite: 1]. Trends with $p<0.05$ are deemed significant[cite: 1]. This analysis is performed for mean, maximum, and minimum temperature, humidity, dew point, and the temperature--humidity indices (heat index, wet-bulb temperature, shade WBGT) that are computable across the full record[cite: 1].
+
+A subset of districts encodes pre-$\sim$2000 missing days as zero in the source record; left uncorrected, the resulting $0\rightarrow\sim\!30\,\degC$ step fabricates physically impossible trends (an artifact $+7.8\,\degC$ per decade in one district)[cite: 1]. Before any trend is fit, daily values below physically plausible floors ($5\,\degC$ for temperatures, with lower floors for minimum temperature and dew point, and $5\%$ for humidity) are therefore treated as missing, and a year must retain at least 60 valid days to enter the annual-mean series[cite: 1]. The same masked slopes are used when the trend is re-added to the projection (Section~\ref{sec:detrend})[cite: 1]. This affects only the observational trend and long-run slope; the machine-learning models are unaffected because they train exclusively on the complete 2014--2024 window[cite: 1].
+
+\subsection{Zonal synthesis}\label{sec:zonal}
+District-level projections are summarised by zone as monthly and annual envelopes (the minimum, mean, and maximum across member districts) for the key indices, providing compact, journal-page-efficient views of the projected heat-stress distribution in place of 64 individual district panels[cite: 1]. Full district-level detail is additionally retained through choropleth maps rendered directly from the CC BY 3.0 IGO geoBoundaries Bangladesh ADM2 administrative boundaries \citep{GeoBoundaries2020}; districts are matched to the boundary geometry by name, and per-district values are mapped for the observed trends, the projected annual means of all seven conditions, and the number of months per year for each district spends in each condition's hazard class[cite: 1].
+
+\subsection{Implementation and reproducibility}\label{sec:impl}
+The pipeline is implemented in Python~3.14 using scikit-learn~1.8 \citep{Pedregosa2011}, LightGBM~4.6, XGBoost~3.3, CatBoost~1.2.10, together with NumPy, pandas, and Matplotlib[cite: 1]. All stochastic components use a fixed seed, and a run manifest records package versions, configuration constants, and per-run timings so that every reported artefact is traceable to a specific configuration[cite: 1]. The complete source code, the reviewer workbook, and an interactive web application that exposes every district and condition are released with the study (see Data availability)[cite: 1].
+
+\section{Results}\label{sec2}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
+
+\section{This is an example for first level head---section head}\label{sec3}
+
+\subsection{This is an example for second level head---subsection head}\label{subsec2}
+
+\subsubsection{This is an example for third level head---subsubsection head}\label{subsubsec2}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. 
+
+\section{Equations}\label{sec4}
+
+Equations in \LaTeX\ can either be inline or on-a-line by itself (``display equations''). For
+inline equations use the \verb+$...$+ commands. E.g.: The equation
+$H\psi = E \psi$ is written via the command \verb+$H \psi = E \psi$+.
+
+For display equations (with auto generated equation numbers)
+one can use the equation or align environments:
+\begin{equation}
+\|\tilde{X}(k)\|^2 \leq\frac{\sum\limits_{i=1}^{p}\left\|\tilde{Y}_i(k)\right\|^2+\sum\limits_{j=1}^{q}\left\|\tilde{Z}_j(k)\right\|^2 }{p+q}.\label{eq1}
+\end{equation}
+where,
+\begin{align}
+D_\mu &=  \partial_\mu - ig \frac{\lambda^a}{2} A^a_\mu \nonumber \\
+F^a_{\mu\nu} &= \partial_\mu A^a_\nu - \partial_\nu A^a_\mu + g f^{abc} A^b_\mu A^a_\nu \label{eq2}
+\end{align}
+Notice the use of \verb+\nonumber+ in the align environment at the end
+of each line, except the last, so as not to produce equation numbers on
+lines where no equation numbers are required. The \verb+\label{}+ command
+should only be used at the last line of an align environment where
+\verb+\nonumber+ is not used.
+\begin{equation}
+Y_\infty = \left( \frac{m}{\textrm{GeV}} \right)^{-3}
+    \left[ 1 + \frac{3 \ln(m/\textrm{GeV})}{15}
+    + \frac{\ln(c_2/5)}{15} \right]
+\end{equation}
+The class file also supports the use of \verb+\mathbb{}+, \verb+\mathscr{}+ and
+\verb+\mathcal{}+ commands. As such \verb+\mathbb{R}+, \verb+\mathscr{R}+
+and \verb+\mathcal{R}+ produces $\mathbb{R}$, $\mathscr{R}$ and $\mathcal{R}$
+respectively (refer Subsubsection~\ref{subsubsec2}).
+
+\section{Tables}\label{sec5}
+
+Tables can be inserted via the normal table and tabular environment. To put
+footnotes inside tables you should use \verb+\footnotetext[]{...}+ tag.
+The footnote appears just below the table itself (refer Tables~\ref{tab1} and \ref{tab2}). 
+For the corresponding footnotemark use \verb+\footnotemark[...]+
+
+\begin{table}[h]
+\caption{Caption text}\label{tab1}%
+\begin{tabular}{@{}llll@{}}
+\toprule
+Column 1 & Column 2  & Column 3 & Column 4\\
+\midrule
+row 1    & data 1   & data 2  & data 3  \\
+row 2    & data 4   & data 5\footnotemark[1]  & data 6  \\
+row 3    & data 7   & data 8  & data 9\footnotemark[2]  \\
+\botrule
+\end{tabular}
+\footnotetext{Source: This is an example of table footnote. This is an example of table footnote.}
+\footnotetext[1]{Example for a first table footnote. This is an example of table footnote.}
+\footnotetext[2]{Example for a second table footnote. This is an example of table footnote.}
+\end{table}
+
+\noindent
+The input format for the above table is as follows:
+
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+\bigskip
+\begin{verbatim}
+\begin{table}[<placement-specifier>]
+\caption{<table-caption>}\label{<table-label>}%
+\begin{tabular}{@{}llll@{}}
+\toprule
+Column 1 & Column 2 & Column 3 & Column 4\\
+\midrule
+row 1 & data 1 & data 2	 & data 3 \\
+row 2 & data 4 & data 5\footnotemark[1] & data 6 \\
+row 3 & data 7 & data 8	 & data 9\footnotemark[2]\\
+\botrule
+\end{tabular}
+\footnotetext{Source: This is an example of table footnote. 
+This is an example of table footnote.}
+\footnotetext[1]{Example for a first table footnote.
+This is an example of table footnote.}
+\footnotetext[2]{Example for a second table footnote. 
+This is an example of table footnote.}
+\end{table}
+\end{verbatim}
+\bigskip
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+
+\begin{table}[h]
+\caption{Example of a lengthy table which is set to full textwidth}\label{tab2}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
+\toprule%
+& \multicolumn{3}{@{}c@{}}{Element 1\footnotemark[1]} & \multicolumn{3}{@{}c@{}}{Element 2\footnotemark[2]} \\\cmidrule{2-4}\cmidrule{5-7}%
+Project & Energy & $\sigma_{calc}$ & $\sigma_{expt}$ & Energy & $\sigma_{calc}$ & $\sigma_{expt}$ \\
+\midrule
+Element 3  & 990 A & 1168 & $1547\pm12$ & 780 A & 1166 & $1239\pm100$\\
+Element 4  & 500 A & 961  & $922\pm10$  & 900 A & 1268 & $1092\pm40$\\
+\botrule
+\end{tabular*}
+\footnotetext{Note: This is an example of table footnote. This is an example of table footnote this is an example of table footnote this is an example of~table footnote this is an example of table footnote.}
+\footnotetext[1]{Example for a first table footnote.}
+\footnotetext[2]{Example for a second table footnote.}
+\end{table}
+
+In case of double column layout, tables which do not fit in single column width should be set to full text width. For this, you need to use \verb+\begin{table*}+ \verb+...+ \verb+\end{table*}+ instead of \verb+\begin{table}+ \verb+...+ \verb+\end{table}+ environment. Lengthy tables which do not fit in textwidth should be set as rotated table. For this, you need to use \verb+\begin{sidewaystable}+ \verb+...+ \verb+\end{sidewaystable}+ instead of \verb+\begin{table*}+ \verb+...+ \verb+\end{table*}+ environment. This environment puts tables rotated to single column width. For tables rotated to double column width, use \verb+\begin{sidewaystable*}+ \verb+...+ \verb+\end{sidewaystable*}+.
+
+\begin{sidewaystable}
+\caption{Tables which are too long to fit, should be written using the ``sidewaystable'' environment as shown here}\label{tab3}
+\begin{tabular*}{\textheight}{@{\extracolsep\fill}lcccccc}
+\toprule%
+& \multicolumn{3}{@{}c@{}}{Element 1\footnotemark[1]}& \multicolumn{3}{@{}c@{}}{Element\footnotemark[2]} \\\cmidrule{2-4}\cmidrule{5-7}%
+Projectile & Energy	& $\sigma_{calc}$ & $\sigma_{expt}$ & Energy & $\sigma_{calc}$ & $\sigma_{expt}$ \\
+\midrule
+Element 3 & 990 A & 1168 & $1547\pm12$ & 780 A & 1166 & $1239\pm100$ \\
+Element 4 & 500 A & 961  & $922\pm10$  & 900 A & 1268 & $1092\pm40$ \\
+Element 5 & 990 A & 1168 & $1547\pm12$ & 780 A & 1166 & $1239\pm100$ \\
+Element 6 & 500 A & 961  & $922\pm10$  & 900 A & 1268 & $1092\pm40$ \\
+\botrule
+\end{tabular*}
+\footnotetext{Note: This is an example of table footnote this is an example of table footnote this is an example of table footnote this is an example of~table footnote this is an example of table footnote.}
+\footnotetext[1]{This is an example of table footnote.}
+\end{sidewaystable}
+
+\section{Figures}\label{sec6}
+
+As per the \LaTeX\ standards you need to use eps images for \LaTeX\ compilation and \verb+pdf/jpg/png+ images for \verb+PDFLaTeX+ compilation. This is one of the major difference between \LaTeX\ and \verb+PDFLaTeX+. Each image should be from a single input .eps/vector image file. Avoid using subfigures. The command for inserting images for \LaTeX\ and \verb+PDFLaTeX+ can be generalized. The package used to insert images in \verb+LaTeX/PDFLaTeX+ is the graphicx package. Figures can be inserted via the normal figure environment as shown in the below example:
+
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+\bigskip
+\begin{verbatim}
+\begin{figure}[<placement-specifier>]
+\centering
+\includegraphics{<eps-file>}
+\caption{<figure-caption>}\label{<figure-label>}
+\end{figure}
+\end{verbatim}
+\bigskip
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{fig.eps}
+\caption{This is a widefig. This is an example of long caption this is an example of long caption  this is an example of long caption this is an example of long caption}\label{fig1}
+\end{figure}
+
+In case of double column layout, the above format puts figure captions/images to single column width. To get spanned images, we need to provide \verb+\begin{figure*}+ \verb+...+ \verb+\end{figure*}+.
+
+For sample purpose, we have included the width of images in the optional argument of \verb+\includegraphics+ tag. Please ignore this. 
+
+\section{Algorithms, Program codes and Listings}\label{sec7}
+
+Packages \verb+algorithm+, \verb+algorithmicx+ and \verb+algpseudocode+ are used for setting algorithms in \LaTeX\ using the format:
+
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+\bigskip
+\begin{verbatim}
+\begin{algorithm}
+\caption{<alg-caption>}\label{<alg-label>}
+\begin{algorithmic}[1]
+. . .
+\end{algorithmic}
+\end{algorithm}
+\end{verbatim}
+\bigskip
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+
+You may refer above listed package documentations for more details before setting \verb+algorithm+ environment. For program codes, the ``verbatim'' package is required and the command to be used is \verb+\begin{verbatim}+ \verb+...+ \verb+\end{verbatim}+. 
+
+Similarly, for \verb+listings+, use the \verb+listings+ package. \verb+\begin{lstlisting}+ \verb+...+ \verb+\end{lstlisting}+ is used to set environments similar to \verb+verbatim+ environment. Refer to the \verb+lstlisting+ package documentation for more details.
+
+A fast exponentiation procedure:
+
+\lstset{texcl=true,basicstyle=\small\sf,commentstyle=\small\rm,mathescape=true,escapeinside={(*}{*)}}
+\begin{lstlisting}
+begin
+  for $i:=1$ to $10$ step $1$ do
+      expt($2,i$);  
+      newline() od                (*\textrm{Comments will be set flush to the right margin}*)
+where
+proc expt($x,n$) $\equiv$
+  $z:=1$;
+  do if $n=0$ then exit fi;
+     do if odd($n$) then exit fi;                 
+        comment: (*\textrm{This is a comment statement;}*)
+        $n:=n/2$; $x:=x*x$ od;
+     { $n>0$ };
+     $n:=n-1$; $z:=z*x$ od;
+  print($z$). 
+end
+\end{lstlisting}
+
+\begin{algorithm}
+\caption{Calculate $y = x^n$}\label{algo1}
+\begin{algorithmic}[1]
+\Require $n \geq 0 \vee x \neq 0$
+\Ensure $y = x^n$ 
+\State $y \Leftarrow 1$
+\If{$n < 0$}\label{algln2}
+        \State $X \Leftarrow 1 / x$
+        \State $N \Leftarrow -n$
+\Else
+        \State $X \Leftarrow x$
+        \State $N \Leftarrow n$
+\EndIf
+\While{$N \neq 0$}
+        \If{$N$ is even}
+            \State $X \Leftarrow X \times X$
+            \State $N \Leftarrow N / 2$
+        \Else[$N$ is odd]
+            \State $y \Leftarrow y \times X$
+            \State $N \Leftarrow N - 1$
+        \EndIf
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+\bigskip
+\begin{minipage}{\hsize}%
+\lstset{frame=single,framexleftmargin=-1pt,framexrightmargin=-17pt,framesep=12pt,linewidth=0.98\textwidth,language=pascal}% Set your language (you can change the language for each code-block optionally)
+%%% Start your code-block
+\begin{lstlisting}
+for i:=maxint to 0 do
+begin
+{ do nothing }
+end;
+Write('Case insensitive ');
+Write('Pascal keywords.');
+\end{lstlisting}
+\end{minipage}
+
+\section{Cross referencing}\label{sec8}
+
+Environments such as figure, table, equation and align can have a label
+declared via the \verb+\label{#label}+ command. For figures and table
+environments use the \verb+\label{}+ command inside or just
+below the \verb+\caption{}+ command. You can then use the
+\verb+\ref{#label}+ command to cross-reference them. As an example, consider
+the label declared for Figure~\ref{fig1} which is
+\verb+\label{fig1}+. To cross-reference it, use the command 
+\verb+Figure \ref{fig1}+, for which it comes up as
+``Figure~\ref{fig1}''. 
+
+To reference line numbers in an algorithm, consider the label declared for the line number 2 of Algorithm~\ref{algo1} is \verb+\label{algln2}+. To cross-reference it, use the command \verb+\ref{algln2}+ for which it comes up as line~\ref{algln2} of Algorithm~\ref{algo1}.
+
+\subsection{Details on reference citations}\label{subsec7}
+
+Standard \LaTeX\ permits only numerical citations. To support both numerical and author-year citations this template uses \verb+natbib+ \LaTeX\ package. For style guidance please refer to the template user manual.
+
+Here is an example for \verb+\cite{...}+: \cite{bib1}. Another example for \verb+\citep{...}+: \citep{bib2}. For author-year citation mode, \verb+\cite{...}+ prints Jones et al. (1990) and \verb+\citep{...}+ prints (Jones et al., 1990).
+
+All cited bib entries are printed at the end of this article: \cite{bib3}, \cite{bib4}, \cite{bib5}, \cite{bib6}, \cite{bib7}, \cite{bib8}, \cite{bib9}, \cite{bib10}, \cite{bib11}, \cite{bib12} and \cite{bib13}.
+
+\section{Examples for theorem like environments}\label{sec10}
+
+For theorem like environments, we require \verb+amsthm+ package. There are three types of predefined theorem styles exists---\verb+thmstyleone+, \verb+thmstyletwo+ and \verb+thmstylethree+ 
+
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+\bigskip
+\begin{tabular}{|l|p{19pc}|}
+\hline
+\verb+thmstyleone+ & Numbered, theorem head in bold font and theorem text in italic style \\\hline
+\verb+thmstyletwo+ & Numbered, theorem head in roman font and theorem text in italic style \\\hline
+\verb+thmstylethree+ & Numbered, theorem head in bold font and theorem text in roman style \\\hline
+\end{tabular}
+\bigskip
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+
+For mathematics journals, theorem styles can be included as shown in the following examples:
+
+\begin{theorem}[Theorem subhead]\label{thm1}
+Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. 
+Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. 
+Example theorem text. 
+\end{theorem}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
+
+\begin{proposition}
+Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. 
+Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. 
+\end{proposition}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
+
+\begin{example}
+Phasellus adipiscing semper elit. Proin fermentum massa
+ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend
+at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. 
+\end{example}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
+
+\begin{remark}
+Phasellus adipiscing semper elit. Proin fermentum massa
+ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend
+at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. 
+\end{remark}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
+
+\begin{definition}[Definition sub head]
+Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. 
+\end{definition}
+
+Additionally a predefined ``proof'' environment is available: \verb+\begin{proof}+ \verb+...+ \verb+\end{proof}+. This prints a ``Proof'' head in italic font style and the ``body text'' in roman font style with an open square at the end of each proof environment. 
+
+\begin{proof}
+Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. 
+\end{proof}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
+
+\begin{proof}[Proof of Theorem~{\upshape\ref{thm1}}]
+Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. 
+\end{proof}
+
+\noindent
+For a quote environment, use \verb+\begin{quote}...\end{quote}+
+\begin{quote}
+Quoted text example. Aliquam porttitor quam a lacus. Praesent vel arcu ut tortor cursus volutpat. In vitae pede quis diam bibendum placerat. Fusce elementum
+convallis neque. Sed dolor orci, scelerisque ac, dapibus nec, ultricies ut, mi. Duis nec dui quis leo sagittis commodo.
+\end{quote}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text (refer Figure~\ref{fig1}). Sample body text. Sample body text. Sample body text (refer Table~\ref{tab3}). 
+
+\section{Methods}\label{sec11}
+
+Topical subheadings are allowed. Authors must ensure that their Methods section includes adequate experimental and characterization data necessary for others in the field to reproduce their work. Authors are encouraged to include RIIDs where appropriate. 
+
+\textbf{Ethical approval declarations} (only required where applicable) Any article reporting experiment/s carried out on (i)~live vertebrate (or higher invertebrates), (ii)~humans or (iii)~human samples must include an unambiguous statement within the methods section that meets the following requirements: 
+
+\begin{enumerate}[1.]
+\item Approval: a statement which confirms that all experimental protocols were approved by a named institutional and/or licensing committee. Please identify the approving body in the methods section
+
+\item Accordance: a statement explicitly saying that the methods were carried out in accordance with the relevant guidelines and regulations
+
+\item Informed consent (for experiments involving humans or human tissue samples): include a statement confirming that informed consent was obtained from all participants and/or their legal guardian/s
+\end{enumerate}
+
+If your manuscript includes potentially identifying patient/participant information, or if it describes human transplantation research, or if it reports results of a clinical trial then  additional information will be required. Please visit (\url{https://www.nature.com/nature-research/editorial-policies}) for Nature Portfolio journals, (\url{https://www.springer.com/gp/authors-editors/journal-author/journal-author-helpdesk/publishing-ethics/14214}) for Springer Nature journals, or (\url{https://www.biomedcentral.com/getpublished/editorial-policies\#ethics+and+consent}) for BMC.
+
+\section{Discussion}\label{sec12}
+
+Discussions should be brief and focused. In some disciplines use of Discussion or `Conclusion' is interchangeable. It is not mandatory to use both. Some journals prefer a section `Results and Discussion' followed by a section `Conclusion'. Please refer to Journal-level guidance for any specific requirements. 
+
+\section{Conclusion}\label{sec13}
+
+Conclusions may be used to restate your hypothesis or research question, restate your major findings, explain the relevance and the added value of your work, highlight any limitations of your study, describe future directions for research and recommendations. 
+
+In some disciplines use of Discussion or 'Conclusion' is interchangeable. It is not mandatory to use both. Please refer to Journal-level guidance for any specific requirements. 
+
+\backmatter
+
+\bmhead{Supplementary information}
+
+If your article has accompanying supplementary file/s please state so here. 
+
+Authors reporting data from electrophoretic gels and blots should supply the full unprocessed scans for key as part of their Supplementary information. This may be requested by the editorial team/s if it is missing.
+
+Please refer to Journal-level guidance for any specific requirements.
+
+\bmhead{Acknowledgements}
+
+Acknowledgements are not compulsory. Where included they should be brief. Grant or contribution numbers may be acknowledged.
+
+Please refer to Journal-level guidance for any specific requirements.
+
+\section*{Declarations}
+
+Some journals require declarations to be submitted in a standardised format. Please check the Instructions for Authors of the journal to which you are submitting to see if you need to complete this section. If yes, your manuscript must contain the following sections under the heading `Declarations':
+
+\begin{itemize}
+\item Funding
+\item Conflict of interest/Competing interests (check journal-specific guidelines for which heading to use)
+\item Ethics approval and consent to participate
+\item Consent for publication
+\item Data availability 
+\item Materials availability
+\item Code availability 
+\item Author contribution
+\end{itemize}
+
+\noindent
+If any of the sections are not relevant to your manuscript, please include the heading and write `Not applicable' for that section. 
+
+%%===================================================%%
+%% For presentation purpose, we have included        %%
+%% \bigskip command. Please ignore this.             %%
+%%===================================================%%
+\bigskip
+\begin{flushleft}%
+Editorial Policies for:
+
+\bigskip\noindent
+Springer journals and proceedings: \url{https://www.springer.com/gp/editorial-policies}
+
+\bigskip\noindent
+Nature Portfolio journals: \url{https://www.nature.com/nature-research/editorial-policies}
+
+\bigskip\noindent
+\textit{Scientific Reports}: \url{https://www.nature.com/srep/journal-policies/editorial-policies}
+
+\bigskip\noindent
+BMC journals: \url{https://www.biomedcentral.com/getpublished/editorial-policies}
+\end{flushleft}
+
+\begin{appendices}
+
+\section{Section title of first appendix}\label{secA1}
+
+An appendix contains supplementary information that is not an essential part of the text itself but which may be helpful in providing a more comprehensive understanding of the research problem or it is information that is too cumbersome to be included in the body of the paper.
+
+%%=============================================%%
+%% For submissions to Nature Portfolio Journals %%
+%% please use the heading ``Extended Data''.   %%
+%%=============================================%%
+
+%%=============================================================%%
+%% Sample for another appendix section			       %%
+%%=============================================================%%
+
+%% \section{Example of another appendix section}\label{secA2}%
+%% Appendices may be used for helpful, supporting or essential material that would otherwise 
+%% clutter, break up or be distracting to the text. Appendices can consist of sections, figures, 
+%% tables and equations etc.
+
+\end{appendices}
+
+%%===========================================================================================%%
+%% If you are submitting to one of the Nature Portfolio journals, using the eJP submission   %%
+%% system, please include the references within the manuscript file itself. You may do this  %%
+%% by copying the reference list from your .bbl file, paste it into the main manuscript .tex %%
+%% file, and delete the associated \verb+\bibliography+ commands.                            %%
+%%===========================================================================================%%
+
+\bibliography{sn-bibliography}% common bib file
+%% if required, the content of .bbl file can be included here once bbl is generated
+%%\input sn-article.bbl
+
+\end{document}
