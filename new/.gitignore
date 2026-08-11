@@ -1,0 +1,12 @@
+# LaTeX build artifacts. Sources and the compiled PDF stay tracked.
+*.aux
+*.log
+*.out
+*.blg
+*.spl
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz

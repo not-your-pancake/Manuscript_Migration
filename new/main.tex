@@ -1,0 +1,61 @@
+%% ===========================================================================
+%%  Manuscript for Climatic Change (Springer Nature)   sn-jnl, sn-basic
+%%  Compile with:  pdflatex main / bibtex main / pdflatex main / pdflatex main
+%%
+%%  DOUBLE-BLIND: this file must contain no author names, affiliations,
+%%  emails, ORCIDs, acknowledgements, funding text, or identifying URLs.
+%%  All of that lives in title_page.tex, which is NOT input by this file.
+%% ===========================================================================
+\documentclass[pdflatex,sn-basic,lineno]{sn-jnl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{url}
+
+\graphicspath{{figures/}}
+
+\newcommand{\degC}{\ensuremath{^{\circ}\mathrm{C}}}
+\newcommand{\ph}[1]{\textbf{[PLACEHOLDER: #1]}}
+\newcommand{\vi}{\textbf{[verify-intended]}}
+
+\begin{document}
+
+%% -- Title --
+\title{Projections of Heat-Stress Conditions Across Bangladesh Using Explainable Machine Learning and Climate Trend Integration}%Where and How Fast Is Heat Stress Worsening? A District-Level, Multi-Index Machine-Learning Projection for 64 districts of Bangladesh }
+
+%% -- Authors and affiliations are deliberately absent: see title_page.tex --
+
+%% -- Abstract --
+\abstract{Rising heat and humidity increasingly threaten health, labour, and energy systems
+across Bangladesh, yet operational planning needs district-resolved,
+uncertainty-aware projections of the specific conditions that drive human heat
+stress. We present a deterministic, reproducible machine-learning framework that
+projects seven temperature-correlated heat-stress conditions, heat-index comfort,
+wet-bulb temperature, indoor and outdoor wet-bulb globe temperature, cooling
+degree-days, ultraviolet exposure, and dew-point moisture stress
+for all 64
+districts of Bangladesh. Four gradient-boosting ensembles are trained on the
+2014--2024 monthly record using future-known seasonal features; the observed
+1980--2024 Theil--Sen trend is superimposed so that projections evolve
+realistically, and all thermal indices are recomputed from the projected primary
+variables to avoid target leakage. Validated against withheld 2025 observations,
+the projected indices attain median $R^{2}$ of $0.95$--$0.98$, and their
+operational risk classes match observations to within one class in $100\%$ of
+district-months. A Mann-Kendall analysis shows the maximum temperature rising in
+every district (median $+0.56\,^{\circ}$C per decade) while minimum temperature
+remains flat, indicating a widening diurnal range; the coastal and southwestern
+zones carry the greatest combined burden, and ultraviolet and oppressive humidity
+hazards are effectively nationwide. District choropleths, zonal envelopes, and
+calibrated uncertainty bands provide a directly actionable heat-stress outlook
+while transparently bounding the models' skill relative to climatology. The
+complete 64-district, seven-condition projection is openly explorable through an
+accompanying interactive web application.}
+
+%% -- Keywords --
+\keywords{Temperature-Correlated Conditions, public health, Bangladesh, seasonal projection, Applied Machine Learning}
+
+\maketitle
+
+\end{document}
