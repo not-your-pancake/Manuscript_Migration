@@ -1,4 +1,4 @@
-\begin{thebibliography}{67}
+\begin{thebibliography}{66}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{{#1}}
 \providecommand{\urlprefix}{URL }
@@ -37,6 +37,12 @@ Akter MR, Rahman MH (2025) Analysis of climatic factors and utilization of
   {Bangladesh}. American Journal of Data Mining and Knowledge Discovery
   10(1):1--20. \doi{10.11648/j.ajdmkd.20251001.11}
 
+\bibitem[{Akter et~al.(2024)Akter, Islam, Mallick, Alam, Alam, Shahid, Biswas,
+  Alam, Pal, and Oliver}]{khatun2024}
+Akter MY, Islam ARMT, Mallick J, et~al (2024) Temperature extremes projections
+  over {Bangladesh} from {CMIP6} multi-model ensemble. Theoretical and Applied
+  Climatology 155(9):8843--8869. \doi{10.1007/s00704-024-05173-5}
+
 \bibitem[{Bhatnagar et~al.(2018)Bhatnagar, Mathur, and Garg}]{bhatnagar2018}
 Bhatnagar M, Mathur J, Garg V (2018) Determining base temperature for heating
   and cooling degree-days for {India}. Journal of Building Engineering
@@ -62,11 +68,10 @@ Chen T, Guestrin C (2016) Xgboost: A scalable tree boosting system. In:
   Discovery and Data Mining. Association for Computing Machinery, New York, NY,
   United States, pp 785--794, \doi{https://doi.org/10.1145/2939672.2939785}
 
-\bibitem[{Dewan et~al.(2021)Dewan, Kiselev, Botje, Mahmud, Bhuian, and
-  Hassan}]{dewan2021}
-Dewan A, Kiselev G, Botje D, et~al (2021) Diurnal and seasonal trends and
-  associated determinants of surface urban heat islands in large {Bangladesh}
-  cities. Urban Climate 38:100896. \doi{10.1016/j.uclim.2021.100896}
+\bibitem[{Dewan et~al.(2021)Dewan, Kiselev, and Botje}]{dewan2021}
+Dewan A, Kiselev G, Botje D (2021) Diurnal and seasonal trends and associated
+  determinants of surface urban heat islands in large {Bangladesh} cities.
+  Applied Geography 135:102533. \doi{10.1016/j.apgeog.2021.102533}
 
 \bibitem[{Ehsan et~al.(2026)Ehsan, Bina, Bashar, and
   Paul}]{ehsan2026extremeheat}
@@ -81,11 +86,6 @@ Ekra AT, Hamed MM, Ali Z, et~al (2024) Changes in human heat discomfort and its
   drivers in bangladesh. Urban Climate 55:101884.
   \doi{10.1016/j.uclim.2024.101884},
   \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S2212095524000804}
-
-\bibitem[{Faisal et~al.(2022)Faisal, Kafy, Al~Rakib et~al.}]{faisal2022}
-Faisal AA, Kafy AA, Al~Rakib A, et~al (2022) Impact of urbanization on urban
-  heat island intensity in major districts of {Bangladesh} using remote sensing
-  and geo-spatial tools. Climate 10(1):3. \doi{10.3390/cli10010003}
 
 \bibitem[{{FAO/UNDP}(1988)}]{FAO1988}
 {FAO/UNDP} (1988) Land resources appraisal of bangladesh for agricultural
@@ -105,6 +105,12 @@ Hanoon MS, Ahmed AN, Zaini N, et~al (2021) Developing machine learning
   algorithms for meteorological temperature and humidity forecasting at
   terengganu state in malaysia. Scientific Reports 11:18935.
   \doi{https://doi.org/10.1038/s41598-021-96872-w}
+
+\bibitem[{Hasan et~al.(2024)Hasan, Hasan, and Rahman}]{rahman2024rnlstm}
+Hasan MM, Hasan MJ, Rahman PB (2024) Comparison of {RNN-LSTM}, {TFDF} and
+  stacking model approach for weather forecasting in {Bangladesh} using
+  historical data from 1963 to 2022. PLOS ONE 19(9):e0310446.
+  \doi{10.1371/journal.pone.0310446}
 
 \bibitem[{Hwang and Yoon(1981)}]{Hwang1981}
 Hwang CL, Yoon K (1981) Multiple Attribute Decision Making: Methods and
@@ -133,10 +139,6 @@ Islam ARMT, Ahmed I, Rahman MS, et~al (2021) Spatiotemporal trends of
   multi-statistical techniques. Theoretical and Applied Climatology
   147:137--152. \doi{10.1007/s00704-021-03828-1}
 
-\bibitem[{Islam et~al.(2026)}]{islam2026enso}
-Islam MA, et~al (2026) Seasonal weather pattern prediction from {ENSO} indices
-  using machine learning. Discover Environment \doi{10.1007/s44274-026-00533-6}
-
 \bibitem[{Jeong et~al.(2025)Jeong, Yu, and Cannon}]{jeong2025humidex}
 Jeong DI, Yu B, Cannon AJ (2025) Comparison of two distinct leading modes in
   the variability of summer humidex and temperature heatwaves over north
@@ -163,11 +165,6 @@ Ke G, Meng Q, Finley T, et~al (2017) Lightgbm: A highly efficient gradient
   Advances in Neural Information Processing Systems 30. Curran Associates,
   Inc., pp 3146--3154,
   \urlprefix\url{https://proceedings.neurips.cc/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html}
-
-\bibitem[{Khatun et~al.(2024)}]{khatun2024}
-Khatun MK, et~al (2024) Temperature extremes projections over {Bangladesh} from
-  {CMIP6} multi-model ensemble. Theoretical and Applied Climatology
-  \doi{10.1007/s00704-024-05173-5}
 
 \bibitem[{Kim et~al.(2023)}]{kim2023toxins}
 Kim Hj, et~al (2023) Ensemble machine learning of gradient boosting ({XGBoost},
@@ -223,6 +220,12 @@ Mohammadi K, Shamshirband S, Motamedi S, et~al (2015) Extreme learning machine
   based prediction of daily dew point temperature. Computers and Electronics in
   Agriculture 117:214--225. \doi{https://doi.org/10.1016/j.compag.2015.08.008},
   \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0168169915002343}
+
+\bibitem[{Mohsin et~al.(2026)Mohsin, Ghosh, Akter, Sarkar, and
+  Mullick}]{islam2026enso}
+Mohsin M, Ghosh T, Akter F, et~al (2026) Seasonal weather pattern prediction
+  from {ENSO} indices using machine learning. Discover Environment 4:29.
+  \doi{10.1007/s44274-026-00533-6}
 
 \bibitem[{Park et~al.(2024)}]{park2024}
 Park S, et~al (2024) Characteristics of the urban heat island in {Dhaka},
@@ -290,10 +293,11 @@ Rahman MB, Salam R, Islam ARMT, et~al (2021) Appraising the historical and
   Theoretical and Applied Climatology 146(1--2):125--138.
   \doi{10.1007/s00704-021-03705-x}
 
-\bibitem[{Rahman et~al.(2024)}]{rahman2024rnlstm}
-Rahman MH, et~al (2024) Comparison of {RNN-LSTM}, {TFDF} and stacking model
-  approach for weather forecasting in {Bangladesh} using historical data from
-  1963 to 2022. PLOS ONE \doi{10.1371/journal.pone.0305406}
+\bibitem[{Rahman et~al.(2022)Rahman, Rony, Jannat, Pal, Islam, Alam, and
+  Islam}]{faisal2022}
+Rahman MN, Rony MRH, Jannat FA, et~al (2022) Impact of urbanization on urban
+  heat island intensity in major districts of {Bangladesh} using remote sensing
+  and geo-spatial tools. Climate 10(1):3. \doi{10.3390/cli10010003}
 
 \bibitem[{Rashid(1991)}]{Rashid1991}
 Rashid HE (1991) Geography of Bangladesh. University Press Limited, Dhaka,
@@ -356,11 +360,6 @@ Steadman RG (1979) The assessment of sultriness. {Part I}: A
 Stull R (2011) Wet-bulb temperature from relative humidity and air temperature.
   Journal of Applied Meteorology and Climatology 50(11):2267--2269.
   \doi{10.1175/JAMC-D-11-0143.1}
-
-\bibitem[{Sultana et~al.(2021)Sultana, Islam, Akter, and Paul}]{Sultana2021}
-Sultana S, Islam AKMS, Akter F, et~al (2021) Changes in wet bulb globe
-  temperature and risk to heat-related hazards in bangladesh. Scientific
-  Reports 11:9683. \doi{10.1038/s41598-021-89214-4}
 
 \bibitem[{Tabassum et~al.(2025)Tabassum, Park, Hong, Baik, and
   Beom-Soon}]{tabassum2025coolroofs}

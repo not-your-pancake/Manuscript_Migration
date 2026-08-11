@@ -5,9 +5,11 @@ Every deviation from `old/manuscript/manuscript.tex`, for review before submissi
 Source: `old/manuscript/manuscript.tex` (elsarticle, targeted at *Urban Climate*)
 Target: `new/main.tex` (`sn-jnl`, `sn-basic`, for *Climatic Change*)
 
-**The manuscript text was not edited.** The migrated body is byte-identical to
-the source apart from one deletion listed under "Blinding" below. A word count
-run with the same tool over both files returns **7,873 words on each side**.
+**No sentence of the manuscript was edited.** The migrated body is byte-identical
+to the source apart from exactly two changes, both listed below and both approved:
+one deletion (the identifying footnote, section 2) and one citation key
+(`Sultana2021` → `dewan2021`, section 4.0). A word count run with the same tool
+over both files returns **7,873 words on each side**.
 
 ---
 
@@ -17,7 +19,7 @@ run with the same tool over both files returns **7,873 words on each side**.
 |---|---|
 | `main.tex` | Anonymised manuscript. Compile this. |
 | `title_page.tex` | Authors, affiliations, email, ORCID, CRediT, live URLs. **Separate submission file — not `\input` by `main.tex`.** |
-| `references.bib` | Byte-identical copy of `old/manuscript/references.bib`. Unmodified. |
+| `references.bib` | Copy of `old/manuscript/references.bib` **with 6 corrected entries** — see section 4.0. Every other entry is unmodified. |
 | `sn-jnl.cls`, `sn-basic.bst` | Copied from `template/`. Unmodified. |
 | `tables/*.tex` | 6 table bodies, byte-identical to `old/manuscript/tables/`. |
 | `figures/*.png` | The 8 referenced figures, byte-identical to `old/outputs/figures/`. |
@@ -105,76 +107,49 @@ extraction artifacts that look alarming but are not real:
 
 ## 3. Changes that alter what the PDF says
 
-### 3.1 `Sultana2021` now cites a different paper — **please confirm**
+### 3.1 `Sultana2021` and `islam2026enso` — RESOLVED, see section 4.0
 
-The old manuscript's reference list was hard-coded, not generated from the
-`.bib`, and the two disagreed:
+These two were originally documented here as unresolved "the `.bib` wins"
+changes. Both were then checked against Crossref and **both turned out to be
+errors in `references.bib`, not in your proofread PDF.** They have been corrected
+and `Sultana2021` has been merged into `dewan2021`. Full detail in **section 4.0**.
 
-| | Author / title / venue |
-|---|---|
-| Old printed list (`\bibitem`) | Dewan, Kiselev, Botje — *Diurnal and seasonal trends… surface urban heat islands in large Bangladesh cities*, **Applied Geography** 135, 102533, DOI `10.1016/j.apgeog.2021.102533` |
-| `references.bib` (now used) | Sultana, Islam, Akter, Paul — *Changes in Wet Bulb Globe Temperature and Risk to Heat-Related Hazards in Bangladesh*, **Scientific Reports** 11, 9683, DOI `10.1038/s41598-021-89214-4` |
+### 3.2 Superseded — see section 4.0
 
-Per instruction the `.bib` was treated as authoritative and left unedited, so the
-citation at old line 139 (unplanned urbanisation intensifying heat stress) now
-resolves to Sultana et al.
+### 3.3 Reference list is 66 entries, was 68
 
-Two further points for the record:
+Two fewer than the old printed list, for two unrelated reasons:
 
-- The old printed list contained the **Dewan paper twice** — once correctly under
-  key `dewan2021` (*Urban Climate* 38, 100896) and once under `Sultana2021` with
-  an Applied Geography DOI that appears **nowhere in `references.bib`**.
-- The `.bib` entry for `Sultana2021` has a title nearly identical to
-  `kamal2024scientific` but different authors, year and DOI. Worth confirming
-  that `10.1038/s41598-021-89214-4` resolves to the Sultana paper.
+- `hunter1999` had a printed `\bibitem` but is never cited, so BibTeX drops it.
+- `Sultana2021` was a phantom entry and is gone; its one citation now points at
+  `dewan2021`, the same paper (section 4.0).
 
-### 3.2 `islam2026enso` now credits different authors — **please confirm**
-
-Same failure mode as 3.1, found by a later, more thorough audit. Both sources
-carry the **same DOI** `10.1007/s44274-026-00533-6`, same title, same journal and
-same year — but disagree completely about who wrote it:
-
-| | Authors |
-|---|---|
-| Old printed list | Mohsin M, Ghosh T, Akter F, Sarkar S, Mullick MRA (2026), *Discover Environment* **4**, 29 |
-| `references.bib` (now used) | Islam, Md. Ariful and others — **no volume, no pages** |
-
-One of these attributions is factually wrong for that DOI. Per instruction the
-`.bib` wins and was left unedited.
-
-Consequences:
-
-- Three in-text citations now read "Islam et al. (2026)" where the old PDF read
-  "Mohsin et al. (2026)" — `new/main.tex` lines 252, 966, 984.
-- The reference entry loses **volume 4 and page 29**; `references.bib` has neither.
-
-**Please check the DOI and tell me which author list is correct.**
-
-### 3.3 Reference list is 67 entries, was 68
-
-`hunter1999` had a printed `\bibitem` but is never cited, so BibTeX drops it.
-Six further `.bib` entries are never cited and do not print: `Bergstra2012`,
-`hasan2025sylhet`, `hunter1999`, `rahman2021heatindex`, `saha2025adaptability`,
+Five further `.bib` entries are never cited and do not print: `Bergstra2012`,
+`hasan2025sylhet`, `rahman2021heatindex`, `saha2025adaptability`,
 `xu2025humidexurinary`.
 
-### 3.4 Complete reference audit — all 67 entries, all fields
+### 3.4 Field-by-field audit — old printed list vs `references.bib`
 
-The first check compared only **title, year, journal and DOI**, which is why 3.2
-was missed. A second pass compared `author`, `title`, `journal`, `booktitle`,
-`year`, `volume`, `number`, `pages`, `publisher` and `doi` in both directions for
-every entry. Full result:
+The first check compared only **title, year, journal and DOI**, which is why the
+author errors were missed. A second pass compared `author`, `title`, `journal`,
+`booktitle`, `year`, `volume`, `number`, `pages`, `publisher` and `doi` in both
+directions for every entry. Result:
 
-| Entry | What differs | Severity |
+| Entry | What differed | Outcome |
 |---|---|---|
-| `Sultana2021` | author, title, journal, volume, pages — **a different paper** (3.1) | substantive |
-| `islam2026enso` | author entirely; loses volume 4 and page 29 (3.2) | substantive |
-| `faisal2022` | "urbani**s**ation" → "urbani**z**ation" | cosmetic |
-| `iso7243_2017` | `.bib` title carries an em-dash the printed title lacked | cosmetic |
-| `saha2025postescalation` | pages `157--158` → `157-158` (en-dash becomes hyphen) | cosmetic |
+| `Sultana2021` | author, title, journal, volume, pages | **fixed** — section 4.0 |
+| `islam2026enso` | author entirely; volume and pages absent | **fixed** — section 4.0 |
+| `faisal2022` | "urbani**s**ation" → "urbani**z**ation" | cosmetic, `.bib` spelling kept |
+| `iso7243_2017` | `.bib` title carries an em-dash the printed title lacked | cosmetic, left as is |
+| `saha2025postescalation` | pages `157--158` → `157-158` (en-dash becomes hyphen) | cosmetic, left as is |
 
-**The other 62 entries match on every compared field.**
+**The other 62 entries matched on every compared field.**
 
-Detail *lost*: only `islam2026enso` (volume, pages).
+Note this pass compares the two *local* sources against each other; it cannot
+tell which is factually right. That required checking the DOIs against Crossref —
+see section 4.0, which is where the four additional errors present in *both*
+sources were found.
+
 Detail *gained*: 31 entries pick up issue numbers or publishers that
 `references.bib` carries and the old hard-coded list omitted — e.g. `Abrar2022`
 (number 9, MDPI), `liljegren2008` (number 10, Taylor & Francis), `raymond2020`
@@ -191,6 +166,75 @@ Verbatim from old lines 1156–1164 **except** that the Zenodo DOI and the
 dashboard URL are replaced with "withheld for double-blind peer review; given on
 the title page". Author contributions likewise point to the title page. These are
 the only sentences in the manuscript containing wording not in the original.
+
+---
+
+## 4.0 Six references were factually wrong and have been corrected
+
+Every DOI in the bibliography (56 of the 73 entries carry one) was checked
+against the **Crossref** registry, and against **DataCite** where Crossref had no
+record. Six entries did not describe the paper their DOI points to. All six are
+now corrected from the registry records, with your approval. **No other entry was
+touched, and no manuscript sentence was changed.**
+
+Two of the six were made worse by this migration, because the old hard-coded
+reference list was right and `references.bib` was wrong:
+
+| Key | Was printed in your old PDF | What `references.bib` said | Registry says |
+|---|---|---|---|
+| `Sultana2021` | Dewan, Kiselev & Botje, *Applied Geography* 135:102533 — **correct** | Sultana, Islam, Akter & Paul, *Sci Rep* 11:9683, DOI `10.1038/s41598-021-89214-4` | **That DOI does not exist.** Its title belongs to Kamal, Fahim & Shahid, *Sci Rep* **14**:10417 (2024) — already present as `kamal2024scientific`. The entry was fabricated. |
+| `islam2026enso` | Mohsin, Ghosh, Akter, Sarkar & Mullick, *Discover Environment* 4:29 — **correct** | Islam, Md. Ariful and others | Crossref confirms **Mohsin et al.** for DOI `10.1007/s44274-026-00533-6` |
+
+Four were already wrong in **both** sources, i.e. they are errors in the original
+manuscript that the migration merely carried forward:
+
+| Key | Problem | Corrected to |
+|---|---|---|
+| `rahman2024rnlstm` | DOI `10.1371/journal.pone.0305406` is *"Meta-2OM: a multi-classifier meta-model for RNA 2′-O-methylation"* — an RNA-biology paper | Hasan MM, Hasan MJ, Rahman PB, *PLOS ONE* **19**(9):e0310446, DOI `10.1371/journal.pone.0310446` |
+| `dewan2021` | DOI `10.1016/j.uclim.2021.100896` is Ambade et al., *black carbon over East India* | Dewan A, Kiselev G, Botje D, *Applied Geography* **135**:102533, DOI `10.1016/j.apgeog.2021.102533` (also drops 3 authors the paper does not have) |
+| `khatun2024` | Right paper, wrong authors | Akter MY, Islam ARMT, Mallick J et al., *Theor Appl Climatol* **155**(9):8843–8869 |
+| `faisal2022` | Right paper, wrong authors | Rahman MN, Rony MRH, Jannat FA et al., *Climate* **10**(1):3 |
+
+### The one manuscript edit
+
+`Sultana2021` and `dewan2021` turned out to be **the same paper** — Dewan has no
+*Urban Climate* Bangladesh paper; only the *Applied Geography* one exists. Rather
+than print it twice as "Dewan et al. (2021a)" and "(2021b)", the single citation
+of `Sultana2021` in the Introduction was repointed to `dewan2021`:
+
+```
+main.tex, Introduction:
+  ...distribute unevenly across the landscape \citep{Sultana2021}.
+                              becomes
+  ...distribute unevenly across the landscape \citep{dewan2021}.
+```
+
+This is **the only citation key changed anywhere**, and it reproduces what your
+proofread PDF actually printed at that sentence. The phantom `Sultana2021` entry
+was removed from `references.bib`; a comment marks where it stood, and its
+original text is preserved here:
+
+```bibtex
+@article{Sultana2021,
+  author    = {Sultana, Sharmin and Islam, A. K. M. Saiful and Akter, Farhana and Paul, Susmita},
+  title     = {Changes in Wet Bulb Globe Temperature and Risk to Heat-Related Hazards in Bangladesh},
+  journal   = {Scientific Reports}, volume = {11}, pages = {9683}, year = {2021},
+  doi       = {10.1038/s41598-021-89214-4}, publisher = {Nature Publishing Group}
+}
+```
+
+The reference list is therefore **66 entries**, not 67.
+
+### Re-verification after the fixes
+
+All 55 remaining DOIs re-checked: **53 verified correct, 0 that fail to resolve.**
+Two are flagged by the checker but are false positives — Crossref stores the
+XGBoost paper's title as just "XGBoost", and the IPCC chapter's title is literally
+"Asia", too short for the title-overlap test.
+
+**17 entries carry no DOI** (ISO 7243, the WHO report, NeurIPS papers, Breiman,
+Steadman, the Visual Crossing API, etc.). You chose not to verify these; they
+remain unchecked.
 
 ---
 
